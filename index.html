@@ -258,12 +258,19 @@
   </div>
 </div>
 
+          <div class="pt-4 border-t border-gray-100 flex justify-end">
+            <button onclick="saveDataKolektifOnly()" id="btnKolektifSubmit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-6 rounded-lg text-xs shadow-md transition-all">
+              Simpan Menu Kolektif Saja
+            </button>
+          </div>
+        </div>
+
         <div id="step-container-5" class="step-section step-hide space-y-6">
           
           <div class="p-4 bg-green-50 border border-green-200 rounded-xl flex flex-wrap items-center justify-between gap-4 no-print">
             <div>
-              <h3 class="text-sm font-bold text-green-900">Penghitungan Skor Kepatuhan & Cetak Berita Acara</h3>
-              <p class="text-[11px] text-green-700">Pilih Cabang & Responden di form atas terlebih dahulu, lalu klik tombol muat di bawah ini.</p>
+              <h3 class="text-sm font-bold text-green-900">Penghitungan Skor Kepatuhan Dealer & Cetak Berita Acara</h3>
+              <p class="text-[11px] text-green-700">Pilih Cabang di form atas (Responden tidak wajib), lalu klik tombol muat. Skor dihitung gabungan dari SEMUA responden yang sudah submit (kalau 1 responden jawab "NO", pertanyaan itu dianggap "NO" untuk dealer).</p>
             </div>
             <button onclick="loadReportSummary()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg text-xs shadow-md transition-all">
               🔄 Tarik & Hitung Summary
@@ -283,7 +290,7 @@
                 <p><strong>Cabang:</strong> <span id="repCabang">-</span></p>
                 <p><strong>Auditor / Leader:</strong> <span id="repAuditor">-</span></p>
                 <p><strong>ADH Pemeriksa:</strong> <span id="repAdh">-</span></p>
-                <p><strong>Responden:</strong> <span id="repResponden">-</span></p>
+                <p><strong>Jumlah Responden:</strong> <span id="repResponden">-</span></p>
               </div>
               <div class="flex flex-col items-center justify-center border-l border-gray-200 pl-4">
                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Skor Kepatuhan Gabungan</span>
@@ -314,20 +321,43 @@
             </div>
 
             <div>
+              <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Skor Per Responden (Identifikasi Weakest Link)</h4>
+              <div class="overflow-x-auto">
+                <table class="w-full text-[11px] text-left border-collapse border border-gray-200">
+                  <thead>
+                    <tr class="bg-slate-100 text-slate-700">
+                      <th class="border border-gray-200 p-2 w-12 text-center">No</th>
+                      <th class="border border-gray-200 p-2">Responden</th>
+                      <th class="border border-gray-200 p-2">Keterangan Posisi</th>
+                      <th class="border border-gray-200 p-2 text-center">Jawaban Benar (YES)</th>
+                      <th class="border border-gray-200 p-2 text-center">Skor Individu</th>
+                    </tr>
+                  </thead>
+                  <tbody id="perRespondenTableBody">
+                    <tr>
+                      <td colspan="5" class="text-center p-4 text-gray-400">Belum ada data.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
               <h4 class="text-[10px] font-bold text-red-600 uppercase tracking-wider mb-2">Daftar Temuan Lapangan / Defisiensi (Jawaban "NO")</h4>
               <div class="overflow-x-auto">
                 <table class="w-full text-[11px] text-left border-collapse border border-gray-200">
                   <thead>
                     <tr class="bg-red-50 text-red-800">
                       <th class="border border-gray-200 p-2 w-12 text-center">No</th>
-                      <th class="border border-gray-200 p-2 w-36">Aspek</th>
+                      <th class="border border-gray-200 p-2 w-32">Aspek</th>
                       <th class="border border-gray-200 p-2">Item Defisiensi Pertanyaan</th>
+                      <th class="border border-gray-200 p-2 w-40">Responden Penjawab "NO"</th>
                       <th class="border border-gray-200 p-2">Catatan Khusus Auditor</th>
                     </tr>
                   </thead>
                   <tbody id="findingsTableBody">
                     <tr>
-                      <td colspan="4" class="text-center p-4 text-gray-400">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td>
+                      <td colspan="5" class="text-center p-4 text-gray-400">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td>
                     </tr>
                   </tbody>
                 </table>
@@ -563,12 +593,13 @@
     }
 
     // TARIK SUMMARY REAL-TIME
+    let lastDealerSummary = null;
+
     function loadReportSummary() {
       const cabang = document.getElementById("metaCabang").value;
-      const respondenId = document.getElementById("metaResponden").value;
 
-      if (!cabang || !respondenId) {
-        alert("⚠️ HARAP PILIH CABANG DAN RESPONDEN DULU!");
+      if (!cabang) {
+        alert("⚠️ HARAP PILIH CABANG DULU!");
         return;
       }
 
@@ -579,28 +610,29 @@
         method: "POST",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
-          action: "getSummary",
-          payload: { cabang: cabang, respondenId: respondenId }
+          action: "getDealerSummary",
+          payload: { cabang: cabang }
         })
       })
       .then(response => response.json())
       .then(res => {
         document.getElementById("reportLoader").classList.add("hidden");
-        
+
         if (!res.success) {
           alert("⚠️ " + res.message);
           return;
         }
 
+        lastDealerSummary = res;
         document.getElementById("reportContainer").classList.remove("hidden");
 
         document.getElementById("reportDate").innerText = "Dilakukan Tanggal: " + res.metadata.date;
         document.getElementById("repCabang").innerText = res.metadata.cabang;
-        document.getElementById("repAuditor").innerText = res.metadata.auditorName;
+        document.getElementById("repAuditor").innerText = res.metadata.auditors;
         document.getElementById("repAdh").innerText = res.metadata.adhName;
-        document.getElementById("repResponden").innerText = res.metadata.respondenId;
-        
-        document.getElementById("sigAuditor").innerText = res.metadata.auditorName;
+        document.getElementById("repResponden").innerText = res.metadata.totalResponden + " Responden";
+
+        document.getElementById("sigAuditor").innerText = res.metadata.auditors;
         document.getElementById("sigAdh").innerText = res.metadata.adhName;
 
         document.getElementById("repScore").innerText = res.overallScore + "%";
@@ -610,19 +642,44 @@
         document.getElementById("score_fop").innerText = getAspectScoreString(res.aspects["Finance Operation Aspect"]);
         document.getElementById("score_fba").innerText = getAspectScoreString(res.aspects["Financial Business & Analyst"]);
 
+        // Render tabel skor per responden, yang terendah (weakest link) di baris paling atas & disorot
+        const perRespBody = document.getElementById("perRespondenTableBody");
+        perRespBody.innerHTML = "";
+        if (!res.perResponden || res.perResponden.length === 0) {
+          perRespBody.innerHTML = `<tr><td colspan="5" class="text-center p-4 text-gray-400">Belum ada data.</td></tr>`;
+        } else {
+          const lowestScore = res.perResponden[0].score;
+          res.perResponden.forEach((r, i) => {
+            const isLowest = r.score === lowestScore;
+            const tr = document.createElement("tr");
+            if (isLowest) tr.className = "bg-red-50";
+            tr.innerHTML = `
+              <td class="border border-gray-200 p-2 text-center font-semibold">${i + 1}</td>
+              <td class="border border-gray-200 p-2 font-bold">${r.respondenId}${isLowest ? ' <span class="text-red-600">⚠️</span>' : ''}</td>
+              <td class="border border-gray-200 p-2">${r.keteranganPosisi || "-"}</td>
+              <td class="border border-gray-200 p-2 text-center">${r.yes} / ${r.total}</td>
+              <td class="border border-gray-200 p-2 text-center font-bold ${isLowest ? 'text-red-600' : 'text-slate-700'}">${r.score}%</td>
+            `;
+            perRespBody.appendChild(tr);
+          });
+        }
+
         const tbody = document.getElementById("findingsTableBody");
         tbody.innerHTML = "";
 
         if (res.findings.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-green-600 font-bold bg-green-50">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" class="text-center p-4 text-green-600 font-bold bg-green-50">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td></tr>`;
         } else {
           res.findings.forEach((find, i) => {
             const tr = document.createElement("tr");
+            const culpritList = find.culprits.map(c => `${c.respondenId}${c.keteranganPosisi ? " (" + c.keteranganPosisi + ")" : ""}`).join(", ");
+            const commentList = find.culprits.map(c => c.comment).filter(c => c && c !== "No remarks").join(" | ") || "No remarks";
             tr.innerHTML = `
               <td class="border border-gray-200 p-2 text-center font-semibold">${i + 1}</td>
               <td class="border border-gray-200 p-2 font-bold text-gray-500">${find.aspect}</td>
               <td class="border border-gray-200 p-2 text-red-600 font-semibold">${find.no}. ${find.question}</td>
-              <td class="border border-gray-200 p-2 bg-yellow-50 text-yellow-900">${find.comment}</td>
+              <td class="border border-gray-200 p-2 text-orange-700 font-semibold">${culpritList}</td>
+              <td class="border border-gray-200 p-2 bg-yellow-50 text-yellow-900">${commentList}</td>
             `;
             tbody.appendChild(tr);
           });
