@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>FOAR Audit Web Tool - Nasmoco</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .step-hide { display: none; }
+    /* CSS Khusus Cetak agar layout PDF rapi & sidebar hilang */
+    @media print {
+      body { background: white; color: black; }
+      .no-print { display: none !important; }
+      .print-area { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans antialiased min-h-screen">
+
+  <div class="flex flex-col md:flex-row min-h-screen">
+
+    <div class="w-full md:w-64 bg-slate-900 text-slate-100 flex flex-col justify-between no-print shrink-0 border-r border-slate-800">
+      <div>
+        <div class="p-6 bg-slate-950 border-b border-slate-800 text-center md:text-left">
+          <h1 class="text-xl font-black tracking-wider text-white">FOAR SYSTEM</h1>
+          <p class="text-[10px] text-blue-400 font-semibold tracking-widest uppercase mt-0.5">Nasmoco Group HO</p>
+        </div>
+
+        <nav class="p-4 space-y-1.5">
+          <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Audit Modules</p>
+          
+          <button id="tab-0" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all bg-blue-600 text-white shadow-md" onclick="switchStep(0)">
+            <span>1. General Aspect</span>
+          </button>
+          
+          <button id="tab-1" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all text-slate-300 hover:bg-slate-800 hover:text-white" onclick="switchStep(1)">
+            <span>2. AR & AP Management</span>
+          </button>
+          
+          <button id="tab-2" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all text-slate-300 hover:bg-slate-800 hover:text-white" onclick="switchStep(2)">
+            <span>3. Finance Operation</span>
+          </button>
+          
+          <button id="tab-3" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all text-slate-300 hover:bg-slate-800 hover:text-white" onclick="switchStep(3)">
+            <span>4. FBA (Analyst)</span>
+          </button>
+
+          <div class="my-4 border-t border-slate-800"></div>
+          <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Action & Report</p>
+
+          <button id="tab-4" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all text-purple-300 hover:bg-slate-800 hover:text-purple-100" onclick="switchStep(4)">
+            <span>📊 MENU KOLEKTIF</span>
+          </button>
+          
+          <button id="tab-5" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all text-green-300 hover:bg-slate-800 hover:text-green-100" onclick="switchStep(5)">
+            <span>📑 REPORT SUMMARY</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="p-4 bg-slate-950/60 border-t border-slate-800 text-center text-[10px] text-slate-500">
+        <p>FOAR Web Tool v15.0</p>
+        <p class="mt-0.5">© 2026 FP&A Department</p>
+      </div>
+    </div>
+
+
+    <div class="flex-1 p-6 print-area max-w-5xl mx-auto w-full">
+
+      <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-200/80 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 no-print">
+        <div>
+          <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-400">Cabang Nasmoco</label>
+          <select id="metaCabang" class="mt-1 block w-full p-2 border border-gray-200 rounded-lg text-xs font-semibold focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+            <option value="">-- Pilih Cabang --</option>
+            <option value="NASMOCO BANTUL">NASMOCO BANTUL</option>
+            <option value="NASMOCO BREBES">NASMOCO BREBES</option>
+            <option value="NASMOCO CILACAP">NASMOCO CILACAP</option>
+            <option value="NASMOCO DEMAK">NASMOCO DEMAK</option>
+            <option value="NASMOCO GOMBEL">NASMOCO GOMBEL</option>
+            <option value="NASMOCO JANTI">NASMOCO JANTI</option>
+            <option value="NASMOCO KALIGAWE">NASMOCO KALIGAWE</option>
+            <option value="NASMOCO KARANGJATI">NASMOCO KARANGJATI</option>
+            <option value="NASMOCO KLATEN">NASMOCO KLATEN</option>
+            <option value="NASMOCO MAGELANG">NASMOCO MAGELANG</option>
+            <option value="NASMOCO MAJAPAHIT">NASMOCO MAJAPAHIT</option>
+            <option value="NASMOCO MLATI">NASMOCO MLATI</option>
+            <option value="NASMOCO PATI">NASMOCO PATI</option>
+            <option value="NASMOCO PEKALONGAN">NASMOCO PEKALONGAN</option>
+            <option value="NASMOCO PEMUDA">NASMOCO PEMUDA</option>
+            <option value="NASMOCO PURBALINGGA">NASMOCO PURBALINGGA</option>
+            <option value="NASMOCO PURWOKERTO">NASMOCO PURWOKERTO</option>
+            <option value="NASMOCO RINGROAD">NASMOCO RINGROAD</option>
+            <option value="NASMOCO SALATIGA">NASMOCO SALATIGA</option>
+            <option value="NASMOCO SILIWANGI">NASMOCO SILIWANGI</option>
+            <option value="NASMOCO SLAMET RIYADI">NASMOCO SLAMET RIYADI</option>
+            <option value="NASMOCO SOLO BARU">NASMOCO SOLO BARU</option>
+            <option value="NASMOCO TEGAL">NASMOCO TEGAL</option>
+            <option value="NASMOCO WONOSOBO">NASMOCO WONOSOBO</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-400">Nama Auditor</label>
+          <input type="text" id="metaAuditor" placeholder="Arief Wicaksono (HO)" class="mt-1 block w-full p-2 border border-gray-200 rounded-lg text-xs font-semibold focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-400">ADH Pemeriksa (Checked)</label>
+          <input type="text" id="metaAdh" placeholder="Nama ADH Cabang" class="mt-1 block w-full p-2 border border-gray-200 rounded-lg text-xs font-semibold focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-400">Target Responden</label>
+          <select id="metaResponden" class="mt-1 block w-full p-2 border border-gray-200 rounded-lg text-xs font-semibold focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+            <option value="Responden 1">Responden 1</option>
+            <option value="Responden 2">Responden 2</option>
+            <option value="Responden 3">Responden 3</option>
+            <option value="Responden 4">Responden 4</option>
+            <option value="Responden 5">Responden 5</option>
+            <option value="Responden 6">Responden 6</option>
+            <option value="Responden 7">Responden 7</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold uppercase tracking-wider text-gray-400">Keterangan Posisi</label>
+          <input type="text" id="metaKeteranganPosisi" placeholder="Contoh: Admin AR / Kasir" class="mt-1 block w-full p-2 border border-gray-200 rounded-lg text-xs font-semibold focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        
+        <form id="foarForm" class="no-print">
+          <div id="step-container-0" class="step-section space-y-6"></div>
+          <div id="step-container-1" class="step-section step-hide space-y-6"></div>
+          <div id="step-container-2" class="step-section step-hide space-y-6"></div>
+          <div id="step-container-3" class="step-section step-hide space-y-6"></div>
+        </form>
+
+        <div id="step-container-4" class="step-section step-hide space-y-6 no-print">
+          <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl">
+            <h3 class="text-sm font-bold text-purple-900 mb-0.5">Pengisian Konsolidasi Data Kolektif Cabang</h3>
+            <p class="text-[11px] text-purple-700">Form ini diisi terpisah cukup satu kali saja per sesi kunjungan cabang untuk mencatat summary instrumen pendukung audit.</p>
+          </div>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">1. AP Subsidi Cabang (Bila tidak ada isi 0/Kosongkan)</label>
+              <textarea id="kol_apSubsidi" rows="3" placeholder="Masukkan total nominal atau breakdown data kuitansi klaim subsidi ke HO..." class="mt-1.5 block w-full p-2.5 border border-gray-200 rounded-xl text-xs bg-gray-50 focus:bg-white focus:border-purple-500 focus:ring-1 focus:ring-purple-500"></textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">2. Data FOAR SPK Cabang (Bila tidak ada isi 0/Kosongkan)</label>
+              <textarea id="kol_foarSpk" rows="3" placeholder="Masukkan ringkasan outstanding SPK, status delivery unit retail, atau verifikasi nomor rangka..." class="mt-1.5 block w-full p-2.5 border border-gray-200 rounded-xl text-xs bg-gray-50 focus:bg-white focus:border-purple-500 focus:ring-1 focus:ring-purple-500"></textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">3. Data FOAR EVOPAY Cabang (Bila tidak ada isi 0/Kosongkan)</label>
+              <textarea id="kol_foarEvopay" rows="3" placeholder="Masukkan no VP, sampling voucher payment evopay, atau status balancing bank..." class="mt-1.5 block w-full p-2.5 border border-gray-200 rounded-xl text-xs bg-gray-50 focus:bg-white focus:border-purple-500 focus:ring-1 focus:ring-purple-500"></textarea>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-gray-100 flex justify-end">
+            <button onclick="saveDataKolektifOnly()" id="btnKolektifSubmit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-6 rounded-lg text-xs shadow-md transition-all">
+              Simpan Menu Kolektif Saja
+            </button>
+          </div>
+        </div>
+
+        <div id="step-container-5" class="step-section step-hide space-y-6">
+          
+          <div class="p-4 bg-green-50 border border-green-200 rounded-xl flex flex-wrap items-center justify-between gap-4 no-print">
+            <div>
+              <h3 class="text-sm font-bold text-green-900">Penghitungan Skor Kepatuhan & Cetak Berita Acara</h3>
+              <p class="text-[11px] text-green-700">Pilih Cabang & Responden di form atas terlebih dahulu, lalu klik tombol muat di bawah ini.</p>
+            </div>
+            <button onclick="loadReportSummary()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg text-xs shadow-md transition-all">
+              🔄 Tarik & Hitung Summary
+            </button>
+          </div>
+
+          <div id="reportContainer" class="hidden space-y-6 p-6 border border-gray-200 rounded-xl bg-white shadow-sm">
+            
+            <div class="text-center border-b-2 border-gray-800 pb-4">
+              <h2 class="text-lg font-black tracking-widest text-gray-900">BERITA ACARA</h2>
+              <h3 class="text-md font-bold text-gray-800">FINANCE OPERATIONAL ALIGNMENT REVIEW (FOAR)</h3>
+              <p class="text-xs text-gray-500 mt-1" id="reportDate">Dilakukan Hari, Tanggal: -</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs bg-gray-50 p-4 rounded-xl border border-gray-200">
+              <div class="space-y-1.5">
+                <p><strong>Cabang:</strong> <span id="repCabang">-</span></p>
+                <p><strong>Auditor / Leader:</strong> <span id="repAuditor">-</span></p>
+                <p><strong>ADH Pemeriksa:</strong> <span id="repAdh">-</span></p>
+                <p><strong>Responden:</strong> <span id="repResponden">-</span></p>
+              </div>
+              <div class="flex flex-col items-center justify-center border-l border-gray-200 pl-4">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Skor Kepatuhan Gabungan</span>
+                <span class="text-4xl font-black text-blue-600" id="repScore">0.00%</span>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Breakdown Compliance Per Aspek</h4>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-[10px]">
+                <div class="p-3 border border-gray-200 rounded-lg bg-white">
+                  <p class="font-bold text-gray-500">General Aspect</p>
+                  <p class="text-base font-extrabold text-slate-800 mt-1" id="score_gas">-</p>
+                </div>
+                <div class="p-3 border border-gray-200 rounded-lg bg-white">
+                  <p class="font-bold text-gray-500">AR & AP Management</p>
+                  <p class="text-base font-extrabold text-slate-800 mt-1" id="score_arp">-</p>
+                </div>
+                <div class="p-3 border border-gray-200 rounded-lg bg-white">
+                  <p class="font-bold text-gray-500">Finance Operation</p>
+                  <p class="text-base font-extrabold text-slate-800 mt-1" id="score_fop">-</p>
+                </div>
+                <div class="p-3 border border-gray-200 rounded-lg bg-white">
+                  <p class="font-bold text-gray-500">Analyst Aspect</p>
+                  <p class="text-base font-extrabold text-slate-800 mt-1" id="score_fba">-</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="text-[10px] font-bold text-red-600 uppercase tracking-wider mb-2">Daftar Temuan Lapangan / Defisiensi (Jawaban "NO")</h4>
+              <div class="overflow-x-auto">
+                <table class="w-full text-[11px] text-left border-collapse border border-gray-200">
+                  <thead>
+                    <tr class="bg-red-50 text-red-800">
+                      <th class="border border-gray-200 p-2 w-12 text-center">No</th>
+                      <th class="border border-gray-200 p-2 w-36">Aspek</th>
+                      <th class="border border-gray-200 p-2">Item Defisiensi Pertanyaan</th>
+                      <th class="border border-gray-200 p-2">Catatan Khusus Auditor</th>
+                    </tr>
+                  </thead>
+                  <tbody id="findingsTableBody">
+                    <tr>
+                      <td colspan="4" class="text-center p-4 text-gray-400">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="mt-12 grid grid-cols-3 gap-4 text-center text-[10px] pt-8 border-t border-gray-200">
+              <div>
+                <p class="font-bold text-gray-400 uppercase tracking-wider mb-16">Checked By</p>
+                <p class="font-bold text-gray-800 underline" id="sigAdh">-</p>
+                <p class="text-gray-500">Branch ADH</p>
+              </div>
+              <div>
+                <p class="font-bold text-gray-400 uppercase tracking-wider mb-16">Checked By</p>
+                <p class="font-bold text-gray-800 underline">Afif Raihan A.P.</p>
+                <p class="text-gray-500">FP&A Dept Head</p>
+              </div>
+              <div>
+                <p class="font-bold text-gray-400 uppercase tracking-wider mb-16">Prepared By</p>
+                <p class="font-bold text-gray-800 underline" id="sigAuditor">-</p>
+                <p class="text-gray-500">FOAR Leader</p>
+              </div>
+            </div>
+            <div class="text-center text-[10px] mt-8 pt-4 border-t border-gray-100">
+              <p class="font-bold text-gray-400 uppercase tracking-wider mb-16">Acknowledge By</p>
+              <p class="font-bold text-gray-800 underline">Irawan Wijayanto</p>
+              <p class="text-gray-500">F&A Div Head</p>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100 flex justify-end no-print">
+              <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg text-xs shadow-md transition-all">
+                🖨️ Cetak PDF Berita Acara
+              </button>
+            </div>
+
+          </div>
+
+          <div id="reportLoader" class="hidden text-center py-12 text-gray-500">
+            <p>Sedang menghitung database kuesioner cabang...</p>
+          </div>
+
+        </div>
+
+        <div id="kuesionerNavButtons" class="mt-8 pt-4 border-t border-gray-200 flex justify-between items-center no-print">
+          <button id="btnPrev" onclick="moveStep(-1)" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg text-xs disabled:opacity-40" disabled>
+            Kembali
+          </button>
+          <button id="btnNext" onclick="moveStep(1)" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg text-xs">
+            Selanjutnya
+          </button>
+          <button id="btnFinalSubmit" onclick="collectAndSubmitForm()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg text-xs step-hide">
+            Submit Jawaban Responden
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // DEKLARASI URL ENDPOINT GOOGLE APPS SCRIPT
+    const API_URL = "https://script.google.com/macros/s/AKfycbxqe0ohoU0QSGbodwXUR6YMpr34Qz-K4rP_zOMP4nvtkrIbYbLTK1yyks98qTrXCJI/exec";
+
+    // DATA PERTANYAAN LO AUDIT
+    const rawQuestions = [
+      // 1. General Aspect (10)
+      {"aspect": "General Aspect", "no": "1", "text": "Apakah SGA Admin berjalan rutin (Min 1x 1Bulan) ?"},
+      {"aspect": "General Aspect", "no": "2", "text": "Apakah admin masing-masing telah diberikan KPI Personal ?"},
+      {"aspect": "General Aspect", "no": "3", "text": "Apakah sudah ada Job Description pada masing-masing bagian ?"},
+      {"aspect": "General Aspect", "no": "4", "text": "Pemahaman project Finance HO untuk level Admin di Cabang"},
+      {"aspect": "General Aspect", "no": "5", "text": "Apakah sudah memiliki Brankas khusus untuk BPKB yang terpisah?"},
+      {"aspect": "General Aspect", "no": "6", "text": "Apakah sudah di sosialisasikan terkait dengan SOP Pengambilan BPKB ?"},
+      {"aspect": "General Aspect", "no": "7", "text": "Apakah sudah ada pengadaan webcam yang digunakan untuk foto pengambilan BPKB ?"},
+      {"aspect": "General Aspect", "no": "8", "text": "Apakah brankas BPKB telah diawasi oleh CCTV ?"},
+      {"aspect": "General Aspect", "no": "9", "text": "Apakah ada inisiasi cabang untuk melakukan konfirmasi penerimaan pembayaran ke pelanggan ?"},
+      {"aspect": "General Aspect", "no": "10", "text": "Berikan foto atas inisiasi konfirmasi yang telah dilakukan"},
+
+      // 2. AR & AP Management Aspect (12)
+      {"aspect": "AR & AP Management Aspect", "no": "1", "text": "Apakah pembayaran hutang & piutang secara digital sudah efektif ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "2", "text": "Apakah sudah efektif proses metode penagihan subsidi dari Cabang ke HO ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "3", "text": "Bagaimana pemahaman mekanisme penagihan subsidi ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "4", "text": "Apakah dokumentasi penagihan subsidi dari cabang ke HO terfilling dengan baik ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "5", "text": "Silahkan vouching tagihan subsidi cabang to HO (10 sample)"},
+      {"aspect": "AR & AP Management Aspect", "no": "6", "text": "Apakah sampling dokumentasi Kuitansi Subsidi dari cabang ke HO sudah lengkap ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "7", "text": "Apakah sudah menggunakan tools NIS AR Monitoring?"},
+      {"aspect": "AR & AP Management Aspect", "no": "8", "text": "Apakah sudah mempunyai daftar konfirmasi AR yang terdokumentasi dengan baik?"},
+      {"aspect": "AR & AP Management Aspect", "no": "9", "text": "Apakah dokumentasi penagihan leasing terfilling dengan baik ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "10", "text": "Apakah tanda terima penagihan leasing terdokumentasi dengan baik ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "11", "text": "Silahkan vouching tagihan leasing (10 sample)"},
+      {"aspect": "AR & AP Management Aspect", "no": "12", "text": "Apa masukan untuk AR & AP Aspect ?"},
+
+      // 3. Finance Operation Aspect (21)
+      {"aspect": "Finance Operation Aspect", "no": "1", "text": "Apakah voucher payment (kertas biru) masih digunakan ?"},
+      {"aspect": "Finance Operation Aspect", "no": "2", "text": "Apabila masih digunakan, silahkan beri penjelasan alasan penggunaan voucher payment (kertas biru ) tersebut ?"},
+      {"aspect": "Finance Operation Aspect", "no": "3A", "text": "Apabila kertas biru voucher payment di tiadaan, apakah itu memungkinkan di cabang ? (Untuk mengurangi OPEX di Cabang)"},
+      {"aspect": "Finance Operation Aspect", "no": "3B", "text": "Apakah cabang memahami bahwa voucher payment apabila dibutuhkan dapat dilakukan pencetakan melalui evopay ?"},
+      {"aspect": "Finance Operation Aspect", "no": "4", "text": "Apakah dokumentasi lampiran VP evopay terdokumentasi filling dengan baik ?"},
+      {"aspect": "Finance Operation Aspect", "no": "5", "text": "Apakah sampling dokumentasi lampiran VP Evopay sudah lengkap ?"},
+      {"aspect": "Finance Operation Aspect", "no": "6", "text": "Apakah petugas di cabang memahami utilisasi dashboard monitoring evopay ?"},
+      {"aspect": "Finance Operation Aspect", "no": "7", "text": "Apakah petugas di cabang memahami adanya konsep Mid Month closing untuk proses Balancing Bank ?"},
+      {"aspect": "Finance Operation Aspect", "no": "8", "text": "Apakah proses pengisian pada sistem NIS Accounting yang dilakukan oleh cabang sudah benar pada penerimaan transaksi non tunai ?"},
+      {"aspect": "Finance Operation Aspect", "no": "9", "text": "Berikan catatan tanggapan atas proses pengisian pada sistem NIS Accounting khususnya pada transaksi penerimaan transasksi non tunai"},
+      {"aspect": "Finance Operation Aspect", "no": "10", "text": "Apakah TIMLO berjalan dengan lancar pada cabang anda ?"},
+      {"aspect": "Finance Operation Aspect", "no": "11", "text": "Berikan tanggapan atas Project TIMLO yang dilakukan"},
+      {"aspect": "Finance Operation Aspect", "no": "12", "text": "Apakah selain admin sales, finance, memahami konsep Project Timlo ? (Tolong sampling ke bagian lain)"},
+      {"aspect": "Finance Operation Aspect", "no": "13", "text": "Apakah form TIMLO terdokumentasi dengan baik ?"},
+      {"aspect": "Finance Operation Aspect", "no": "14", "text": "Silahkan vouching 10 Dokumen Timlo (10 sample)"},
+      {"aspect": "Finance Operation Aspect", "no": "15", "text": "Apakah LHK sudah ditandatangani lengkap ?"},
+      {"aspect": "Finance Operation Aspect", "no": "16", "text": "Silahkan vouching 10 Dokumen LHK (10 sample)"},
+      {"aspect": "Finance Operation Aspect", "no": "17", "text": "Apakah isi brangkas uang hanya digunakan untuk menyimpan Uang Tunai?"},
+      {"aspect": "Finance Operation Aspect", "no": "18", "text": "Apabila ada uang selain uang operasional cabang, apakah sudah dibuatkan BA khusus terkait dengan penitipan uang tersebut?"},
+      {"aspect": "Finance Operation Aspect", "no": "19", "text": "Setelah anda suprising Cash Opname, apakah saldo fisik sudah sesuai dengan saldo system ?"},
+      {"aspect": "Finance Operation Aspect", "no": "20", "text": "Apa masukan untuk Finance Operation Aspect ?"},
+
+      // 4. Financial Business & Analyst Aspect (20)
+      {"aspect": "Financial Business & Analyst", "no": "1", "text": "Sudahkah kasir melakukan edukasi untuk pelanggan melakukan pembayaran cashless ?"},
+      {"aspect": "Financial Business & Analyst", "no": "2", "text": "Selain kasir, apakah admin lain memahami atas transaksi cashless ?"},
+      {"aspect": "Financial Business & Analyst", "no": "3", "text": "Apakah ada admin yang tidak memahami Utilisi program cashless yang dijalankan ?"},
+      {"aspect": "Financial Business & Analyst", "no": "4", "text": "Apakah dokumentasi SPK di cabang dilakukan filling dengan baik ?"},
+      {"aspect": "Financial Business & Analyst", "no": "5", "text": "Silahkan vouching 10 SPK (10 sample)"},
+      {"aspect": "Financial Business & Analyst", "no": "6", "text": "Sebutkan 3 Project Finance yang ada pada cabang anda"},
+      {"aspect": "Financial Business & Analyst", "no": "7", "text": "Masih adakah informasi rekening konvensial (manual) pada area kasir ?"},
+      {"aspect": "Financial Business & Analyst", "no": "8", "text": "Inisasi di Cabang apa yang dilakukan untuk mandatori cashless ?"},
+      {"aspect": "Financial Business & Analyst", "no": "9", "text": "Apakah sudah ada media edukasi VA, QRIS & Transfer Bank pada Kasir ?"},
+      {"aspect": "Financial Business & Analyst", "no": "10", "text": "Bagaiamana proses ploting SPK yang ada di cabang ?"},
+      {"aspect": "Financial Business & Analyst", "no": "11", "text": "Sebutkan 3 project apa yang diharapkan cabang untuk didevelop oleh HO ?"},
+      {"aspect": "Financial Business & Analyst", "no": "12", "text": "Apakah mandatory item pada form SPK sudah terisi lengkap (Tandatangan lengkap, dll)?"},
+      {"aspect": "Financial Business & Analyst", "no": "13", "text": "Dalam kondisi seperti apa yang seharusnya menggunakan voucher manual?"},
+      {"aspect": "Financial Business & Analyst", "no": "14", "text": "Apakah ada Berita Acara Stock Opname Mobil (Unit) Bulanan ?"},
+      {"aspect": "Financial Business & Analyst", "no": "15", "text": "Apakah ada Laporan BPKB Opname setiap Bulan ?"},
+      {"aspect": "Financial Business & Analyst", "no": "16", "text": "Silahkan vouching 10 Pengambilan BPKB (10 sample)"},
+      {"aspect": "Financial Business & Analyst", "no": "17", "text": "Silahkan sampling ke 3 admin, apakah memahami SOP Pengambilan BPKB ?"},
+      {"aspect": "Financial Business & Analyst", "no": "18", "text": "Apakah dokumentasi pembelian asset terdokumentasi filling dengan baik ?"},
+      {"aspect": "Financial Business & Analyst", "no": "19", "text": "Apakah kelengkapan dokumentasi pembelian asset di cabang sudah lengkap ?"},
+      {"aspect": "Financial Business & Analyst", "no": "20", "text": "Apa masukan untuk Finance Business & Analyst Aspect ?"}
+    ];
+
+    let currentStep = 0;
+
+    window.onload = function() {
+      // Loop untuk generate UI per Kategori Tab
+      rawQuestions.forEach((q, index) => {
+        let containerId = "";
+        if (q.aspect === "General Aspect") containerId = "step-container-0";
+        else if (q.aspect === "AR & AP Management Aspect") containerId = "step-container-1";
+        else if (q.aspect === "Finance Operation Aspect") containerId = "step-container-2";
+        else if (q.aspect === "Financial Business & Analyst") containerId = "step-container-3";
+        
+        const container = document.getElementById(containerId);
+        if (container) {
+          const qBox = document.createElement("div");
+          qBox.className = "p-4 border border-gray-100 rounded-xl bg-gray-50 shadow-sm space-y-3";
+          qBox.innerHTML = `
+            <p class="font-bold text-gray-800 text-xs md:text-sm">${q.no}. ${q.text}</p>
+            <div class="flex gap-6 items-center bg-white p-2 px-4 rounded-md border border-gray-100 w-fit">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="score_${index}" value="YES" checked class="w-4 h-4 text-blue-600">
+                <span class="text-xs font-bold text-green-600">YES</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="score_${index}" value="NO" class="w-4 h-4 text-red-600">
+                <span class="text-xs font-bold text-red-600">NO</span>
+              </label>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold text-gray-400 mb-1">Catatan Khusus / Temuan Lapangan:</label>
+              <textarea id="comment_${index}" rows="2" placeholder="Tulis rincian temuan atau penjelasan di sini..." class="w-full p-2 text-xs border border-gray-200 rounded-lg bg-white focus:ring focus:ring-blue-100"></textarea>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold text-gray-400 mb-1">Upload Bukti PDF/Foto Berkas (Opsional):</label>
+              <input type="file" id="file_${index}" class="block w-full text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            </div>
+          `;
+          container.appendChild(qBox);
+        }
+      });
+    };
+
+    function switchStep(stepIndex) {
+      currentStep = stepIndex;
+      
+      document.querySelectorAll(".step-section").forEach((sec, idx) => {
+        if (idx === stepIndex) sec.classList.remove("step-hide");
+        else sec.classList.add("step-hide");
+        
+        const tabBtn = document.getElementById("tab-" + idx);
+        if (tabBtn) {
+          tabBtn.className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all ";
+          
+          if (idx === stepIndex) {
+            if (idx === 4) {
+              tabBtn.className += "bg-purple-600 text-white font-bold shadow-md";
+            } else if (idx === 5) {
+              tabBtn.className += "bg-green-600 text-white font-bold shadow-md";
+            } else {
+              tabBtn.className += "bg-blue-600 text-white font-bold shadow-md";
+            }
+          } else {
+            if (idx === 4) {
+              tabBtn.className += "text-purple-300 hover:bg-slate-800 hover:text-purple-100";
+            } else if (idx === 5) {
+              tabBtn.className += "text-green-300 hover:bg-slate-800 hover:text-green-100";
+            } else {
+              tabBtn.className += "text-slate-300 hover:bg-slate-800 hover:text-white";
+            }
+          }
+        }
+      });
+
+      const navButtons = document.getElementById("kuesionerNavButtons");
+      if (stepIndex === 4 || stepIndex === 5) {
+        navButtons.classList.add("step-hide");
+      } else {
+        navButtons.classList.remove("step-hide");
+        document.getElementById("btnPrev").disabled = (stepIndex === 0);
+        if (stepIndex === 3) {
+          document.getElementById("btnNext").classList.add("step-hide");
+          document.getElementById("btnFinalSubmit").classList.remove("step-hide");
+        } else {
+          document.getElementById("btnNext").classList.remove("step-hide");
+          document.getElementById("btnFinalSubmit").classList.add("step-hide");
+        }
+      }
+    }
+
+    function moveStep(direction) {
+      let next = currentStep + direction;
+      if (next >= 0 && next <= 3) switchStep(next);
+    }
+
+    // TARIK SUMMARY REAL-TIME
+    function loadReportSummary() {
+      const cabang = document.getElementById("metaCabang").value;
+      const respondenId = document.getElementById("metaResponden").value;
+
+      if (!cabang || !respondenId) {
+        alert("⚠️ HARAP PILIH CABANG DAN RESPONDEN DULU!");
+        return;
+      }
+
+      document.getElementById("reportContainer").classList.add("hidden");
+      document.getElementById("reportLoader").classList.remove("hidden");
+
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          action: "getSummary",
+          payload: { cabang: cabang, respondenId: respondenId }
+        })
+      })
+      .then(response => response.json())
+      .then(res => {
+        document.getElementById("reportLoader").classList.add("hidden");
+        
+        if (!res.success) {
+          alert("⚠️ " + res.message);
+          return;
+        }
+
+        document.getElementById("reportContainer").classList.remove("hidden");
+
+        document.getElementById("reportDate").innerText = "Dilakukan Tanggal: " + res.metadata.date;
+        document.getElementById("repCabang").innerText = res.metadata.cabang;
+        document.getElementById("repAuditor").innerText = res.metadata.auditorName;
+        document.getElementById("repAdh").innerText = res.metadata.adhName;
+        document.getElementById("repResponden").innerText = res.metadata.respondenId;
+        
+        document.getElementById("sigAuditor").innerText = res.metadata.auditorName;
+        document.getElementById("sigAdh").innerText = res.metadata.adhName;
+
+        document.getElementById("repScore").innerText = res.overallScore + "%";
+
+        document.getElementById("score_gas").innerText = getAspectScoreString(res.aspects["General Aspect"]);
+        document.getElementById("score_arp").innerText = getAspectScoreString(res.aspects["AR & AP Management Aspect"]);
+        document.getElementById("score_fop").innerText = getAspectScoreString(res.aspects["Finance Operation Aspect"]);
+        document.getElementById("score_fba").innerText = getAspectScoreString(res.aspects["Financial Business & Analyst"]);
+
+        const tbody = document.getElementById("findingsTableBody");
+        tbody.innerHTML = "";
+
+        if (res.findings.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-green-600 font-bold bg-green-50">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td></tr>`;
+        } else {
+          res.findings.forEach((find, i) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td class="border border-gray-200 p-2 text-center font-semibold">${i + 1}</td>
+              <td class="border border-gray-200 p-2 font-bold text-gray-500">${find.aspect}</td>
+              <td class="border border-gray-200 p-2 text-red-600 font-semibold">${find.no}. ${find.question}</td>
+              <td class="border border-gray-200 p-2 bg-yellow-50 text-yellow-900">${find.comment}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      })
+      .catch(err => {
+        document.getElementById("reportLoader").classList.add("hidden");
+        alert("Gagal memuat summary dari server API: " + err);
+      });
+    }
+
+    function getAspectScoreString(aspectObj) {
+      if (!aspectObj || aspectObj.total === 0) return "0.00%";
+      const score = ((aspectObj.yes / aspectObj.total) * 100).toFixed(2);
+      return `${score}% (${aspectObj.yes}/${aspectObj.total})`;
+    }
+
+    // KIRIM KUESIONER BARU
+    function collectAndSubmitForm() {
+      const btn = document.getElementById("btnFinalSubmit");
+      const cabang = document.getElementById("metaCabang").value;
+      const auditor = document.getElementById("metaAuditor").value;
+      const adh = document.getElementById("metaAdh").value;
+      const respondenId = document.getElementById("metaResponden").value;
+      const keteranganPosisi = document.getElementById("metaKeteranganPosisi").value;
+
+      if (!cabang || !auditor || !adh || !keteranganPosisi) {
+        alert("⚠️ HARAP LENGKAPI METADATA TERLEBIH DAHULU!\n(Cabang, Auditor, ADH Pemeriksa, dan Keterangan Posisi wajib diisi sebelum submit).");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Memproses Upload Berkas...";
+
+      const payload = {
+        cabang: cabang,
+        auditor: auditor,
+        namaAdh: adh,
+        respondenId: respondenId,
+        keteranganPosisi: keteranganPosisi,
+        answers: []
+      };
+
+      let filesToRead = [];
+
+      rawQuestions.forEach((q, index) => {
+        const score = document.querySelector(`input[name="score_${index}"]:checked`).value;
+        const comment = document.getElementById(`comment_${index}`).value || "No remarks";
+        const fileElement = document.getElementById(`file_${index}`).files[0];
+
+        let ansObj = {
+          qId: q.aspect.split(" ")[0] + "_" + q.no,
+          aspect: q.aspect,
+          no: q.no,
+          text: q.text,
+          score: score,
+          comment: comment,
+          fileData: null
+        };
+        payload.answers.push(ansObj);
+
+        if (fileElement) {
+          filesToRead.push({ idx: index, file: fileElement });
+        }
+      });
+
+      if (filesToRead.length > 0) {
+        let readCount = 0;
+        filesToRead.forEach(function(item) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            payload.answers[item.idx].fileData = {
+              base64: e.target.result,
+              name: item.file.name,
+              type: item.file.type
+            };
+            readCount++;
+            if (readCount === filesToRead.length) {
+              sendPayloadToAppsScript(payload, btn);
+            }
+          };
+          reader.readAsDataURL(item.file);
+        });
+      } else {
+        sendPayloadToAppsScript(payload, btn);
+      }
+    }
+
+    function sendPayloadToAppsScript(payload, btnElement) {
+      btnElement.innerText = "Mengirim Data ke Sheets...";
+      
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          action: "submitAudit",
+          payload: payload
+        })
+      })
+      .then(response => response.json())
+      .then(res => {
+        if (res.success) {
+          alert(res.message);
+          location.reload();
+        } else {
+          alert("Gagal memproses di server: " + res.message);
+          btnElement.disabled = false;
+          btnElement.innerText = "Submit Jawaban Responden";
+        }
+      })
+      .catch(err => {
+        alert("Koneksi API Gagal: " + err.toString());
+        btnElement.disabled = false;
+        btnElement.innerText = "Submit Jawaban Responden";
+      });
+    }
+
+    // SIMPAN DATA KOLEKTIF
+    function saveDataKolektifOnly() {
+      const btn = document.getElementById("btnKolektifSubmit");
+      const cabang = document.getElementById("metaCabang").value;
+      const auditor = document.getElementById("metaAuditor").value;
+
+      if (!cabang || !auditor) {
+        alert("⚠️ HARAP ISI CABANG DAN NAMA AUDITOR TERLEBIH DAHULU!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Menyimpan Data...";
+
+      const payloadKolektif = {
+        cabang: cabang,
+        auditor: auditor,
+        apSubsidi: document.getElementById("kol_apSubsidi").value || "Kosong / Tidak ada data",
+        foarSpk: document.getElementById("kol_foarSpk").value || "Kosong / Tidak ada data",
+        foarEvopay: document.getElementById("kol_foarEvopay").value || "Kosong / Tidak ada data"
+      };
+
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          action: "submitKolektif",
+          payload: payloadKolektif
+        })
+      })
+      .then(response => response.json())
+      .then(res => {
+        if (res.success) {
+          alert(res.message);
+          document.getElementById("kol_apSubsidi").value = "";
+          document.getElementById("kol_foarSpk").value = "";
+          document.getElementById("kol_foarEvopay").value = "";
+        } else {
+          alert("Gagal: " + res.message);
+        }
+        btn.disabled = false;
+        btn.innerText = "Simpan Menu Kolektif Saja";
+      })
+      .catch(err => {
+        alert("Gagal simpan data kolektif: " + err.toString());
+        btn.disabled = false;
+        btn.innerText = "Simpan Menu Kolektif Saja";
+      });
+    }
+  </script>
+</body>
+</html>
