@@ -526,75 +526,71 @@
     // DATA PERTANYAAN LO AUDIT
     const rawQuestions = [
       // 1. General Aspect (10)
-      {"aspect": "General Aspect", "no": "1", "text": "Apakah SGA Admin berjalan rutin (Min 1x 1Bulan) ?"},
-      {"aspect": "General Aspect", "no": "2", "text": "Apakah admin masing-masing telah diberikan KPI Personal ?"},
-      {"aspect": "General Aspect", "no": "3", "text": "Apakah sudah ada Job Description pada masing-masing bagian ?"},
-      {"aspect": "General Aspect", "no": "4", "text": "Pemahaman project Finance HO untuk level Admin di Cabang"},
-      {"aspect": "General Aspect", "no": "5", "text": "Apakah sudah memiliki Brankas khusus untuk BPKB yang terpisah?"},
-      {"aspect": "General Aspect", "no": "6", "text": "Apakah sudah di sosialisasikan terkait dengan SOP Pengambilan BPKB ?"},
-      {"aspect": "General Aspect", "no": "7", "text": "Apakah sudah ada pengadaan webcam yang digunakan untuk foto pengambilan BPKB ?"},
-      {"aspect": "General Aspect", "no": "8", "text": "Apakah brankas BPKB telah diawasi oleh CCTV ?"},
-      {"aspect": "General Aspect", "no": "9", "text": "Apakah ada inisiasi cabang untuk melakukan konfirmasi penerimaan pembayaran ke pelanggan ?"},
-      {"aspect": "General Aspect", "no": "10", "text": "Berikan foto atas inisiasi konfirmasi yang telah dilakukan"},
+      {"aspect": "General Aspect", "no": "1", "text": "Apakah SGA Admin berjalan rutin (Min 1x 1Bulan) ?-all"},
+      {"aspect": "General Aspect", "no": "2", "text": "Apakah admin masing-masing telah diberikan KPI Personal ?-all"},
+      {"aspect": "General Aspect", "no": "3", "text": "Apakah sudah ada Job Description pada masing-masing bagian ?-all"},
+      {"aspect": "General Aspect", "no": "4", "text": "Pemahaman project Finance HO untuk level Admin di Cabang-all"},
+      {"aspect": "General Aspect", "no": "5", "text": "Apakah sudah memiliki Brankas khusus untuk BPKB yang terpisah?-all"},
+      {"aspect": "General Aspect", "no": "6", "text": "Apakah sudah di sosialisasikan terkait dengan SOP Pengambilan BPKB ?-all"},
+      {"aspect": "General Aspect", "no": "7", "text": "Apakah sudah ada pengadaan webcam yang digunakan untuk foto pengambilan BPKB ?-all"},
+      {"aspect": "General Aspect", "no": "8", "text": "Apakah brankas BPKB telah diawasi oleh CCTV ?-all"},
+      {"aspect": "General Aspect", "no": "9", "text": "Apakah ada inisiasi cabang untuk melakukan konfirmasi penerimaan pembayaran ke pelanggan ?-all"},
+      {"aspect": "General Aspect", "no": "10", "text": "Berikan foto atas inisiasi konfirmasi yang telah dilakukan-all"},
 
       // 2. AR & AP Management Aspect (12)
-      {"aspect": "AR & AP Management Aspect", "no": "1", "text": "Apakah pembayaran hutang & piutang secara digital sudah efektif ?"},
-      {"aspect": "AR & AP Management Aspect", "no": "2", "text": "Apakah sudah efektif proses metode penagihan subsidi dari Cabang ke HO ?"},
-      {"aspect": "AR & AP Management Aspect", "no": "3", "text": "Bagaimana pemahaman mekanisme penagihan subsidi ?"},
-      {"aspect": "AR & AP Management Aspect", "no": "4", "text": "Apakah dokumentasi penagihan subsidi dari cabang ke HO terfilling dengan baik ?"},
-      {"aspect": "AR & AP Management Aspect", "no": "5", "text": "Silahkan vouching tagihan subsidi cabang to HO (10 sample)"},
-      {"aspect": "AR & AP Management Aspect", "no": "6", "text": "Apakah sampling dokumentasi Kuitansi Subsidi dari cabang ke HO sudah lengkap ?"},
-      {"aspect": "AR & AP Management Aspect", "no": "7", "text": "Apakah sudah menggunakan tools NIS AR Monitoring?"},
-      {"aspect": "AR & AP Management Aspect", "no": "8", "text": "Apakah sudah mempunyai daftar konfirmasi AR yang terdokumentasi dengan baik?"},
-      {"aspect": "AR & AP Management Aspect", "no": "9", "text": "Apakah dokumentasi penagihan leasing terfilling dengan baik ?"},
-      {"aspect": "AR & AP Management Aspect", "no": "10", "text": "Apakah tanda terima penagihan leasing terdokumentasi dengan baik ?"},
-      {"aspect": "AR & AP Management Aspect", "no": "11", "text": "Silahkan vouching tagihan leasing (10 sample)"},
-      {"aspect": "AR & AP Management Aspect", "no": "12", "text": "Apa masukan untuk AR & AP Aspect ?"},
+      {"aspect": "AR & AP Management Aspect", "no": "1", "text": "Apakah pembayaran hutang & piutang secara digital sudah efektif ?-Fin & Kasir"},
+      {"aspect": "AR & AP Management Aspect", "no": "2", "text": "Apakah sudah efektif proses metode penagihan subsidi dari Cabang ke HO ?-Fin & adm sales"},
+      {"aspect": "AR & AP Management Aspect", "no": "3", "text": "Bagaimana pemahaman mekanisme penagihan subsidi ?-Fin & adm sales"},
+      {"aspect": "AR & AP Management Aspect", "no": "4", "text": "Apakah dokumentasi penagihan subsidi dari cabang ke HO terfilling dengan baik ?-Fin & adm sales"},
+      {"aspect": "AR & AP Management Aspect", "no": "5", "text": "Apakah sampling dokumentasi Kuitansi Subsidi dari cabang ke HO sudah lengkap ?-Fin & adm sales"},
+      {"aspect": "AR & AP Management Aspect", "no": "6", "text": "Apakah sudah menggunakan tools NIS AR Monitoring?-Fin & adm bengkel gr/bp"},
+      {"aspect": "AR & AP Management Aspect", "no": "7", "text": "Apakah sudah mempunyai daftar konfirmasi AR yang terdokumentasi dengan baik?-Fin & adm bengkel gr/bp"},
+      {"aspect": "AR & AP Management Aspect", "no": "8", "text": "Apakah dokumentasi penagihan leasing terfilling dengan baik ?-Fin & adm sales"},
+      {"aspect": "AR & AP Management Aspect", "no": "9", "text": "Apakah tanda terima penagihan leasing terdokumentasi dengan baik ?-Fin & adm sales"},
+      {"aspect": "AR & AP Management Aspect", "no": "10", "text": "Silahkan vouching tagihan leasing (10 sample)-Fin & adm sales"},
+      {"aspect": "AR & AP Management Aspect", "no": "11", "text": "Apa masukan untuk AR & AP Aspect ?-all"},
 
       // 3. Finance Operation Aspect (21)
-      {"aspect": "Finance Operation Aspect", "no": "1", "text": "Apakah voucher payment (kertas biru) masih digunakan ?"},
-      {"aspect": "Finance Operation Aspect", "no": "2", "text": "Apabila masih digunakan, silahkan beri penjelasan alasan penggunaan voucher payment (kertas biru ) tersebut ?"},
-      {"aspect": "Finance Operation Aspect", "no": "3A", "text": "Apabila kertas biru voucher payment di tiadaan, apakah itu memungkinkan di cabang ? (Untuk mengurangi OPEX di Cabang)"},
-      {"aspect": "Finance Operation Aspect", "no": "3B", "text": "Apakah cabang memahami bahwa voucher payment apabila dibutuhkan dapat dilakukan pencetakan melalui evopay ?"},
-      {"aspect": "Finance Operation Aspect", "no": "4", "text": "Apakah dokumentasi lampiran VP evopay terdokumentasi filling dengan baik ?"},
-      {"aspect": "Finance Operation Aspect", "no": "5", "text": "Apakah sampling dokumentasi lampiran VP Evopay sudah lengkap ?"},
-      {"aspect": "Finance Operation Aspect", "no": "6", "text": "Apakah petugas di cabang memahami utilisasi dashboard monitoring evopay ?"},
-      {"aspect": "Finance Operation Aspect", "no": "7", "text": "Apakah petugas di cabang memahami adanya konsep Mid Month closing untuk proses Balancing Bank ?"},
-      {"aspect": "Finance Operation Aspect", "no": "8", "text": "Apakah proses pengisian pada sistem NIS Accounting yang dilakukan oleh cabang sudah benar pada penerimaan transaksi non tunai ?"},
-      {"aspect": "Finance Operation Aspect", "no": "9", "text": "Berikan catatan tanggapan atas proses pengisian pada sistem NIS Accounting khususnya pada transaksi penerimaan transasksi non tunai"},
-      {"aspect": "Finance Operation Aspect", "no": "10", "text": "Apakah TIMLO berjalan dengan lancar pada cabang anda ?"},
-      {"aspect": "Finance Operation Aspect", "no": "11", "text": "Berikan tanggapan atas Project TIMLO yang dilakukan"},
-      {"aspect": "Finance Operation Aspect", "no": "12", "text": "Apakah selain admin sales, finance, memahami konsep Project Timlo ? (Tolong sampling ke bagian lain)"},
-      {"aspect": "Finance Operation Aspect", "no": "13", "text": "Apakah form TIMLO terdokumentasi dengan baik ?"},
-      {"aspect": "Finance Operation Aspect", "no": "14", "text": "Silahkan vouching 10 Dokumen Timlo (10 sample)"},
-      {"aspect": "Finance Operation Aspect", "no": "15", "text": "Apakah LHK sudah ditandatangani lengkap ?"},
-      {"aspect": "Finance Operation Aspect", "no": "16", "text": "Silahkan vouching 10 Dokumen LHK (10 sample)"},
-      {"aspect": "Finance Operation Aspect", "no": "17", "text": "Apakah isi brangkas uang hanya digunakan untuk menyimpan Uang Tunai?"},
-      {"aspect": "Finance Operation Aspect", "no": "18", "text": "Apabila ada uang selain uang operasional cabang, apakah sudah dibuatkan BA khusus terkait dengan penitipan uang tersebut?"},
-      {"aspect": "Finance Operation Aspect", "no": "19", "text": "Setelah anda suprising Cash Opname, apakah saldo fisik sudah sesuai dengan saldo system ?"},
-      {"aspect": "Finance Operation Aspect", "no": "20", "text": "Apa masukan untuk Finance Operation Aspect ?"},
+      {"aspect": "Finance Operation Aspect", "no": "1", "text": "Apakah voucher payment (kertas biru) masih digunakan ?-all"},
+      {"aspect": "Finance Operation Aspect", "no": "2", "text": "Apabila masih digunakan, silahkan beri penjelasan alasan penggunaan voucher payment (kertas biru ) tersebut ?-all"},
+      {"aspect": "Finance Operation Aspect", "no": "3A", "text": "Apabila kertas biru voucher payment di tiadaan, apakah itu memungkinkan di cabang ? (Untuk mengurangi OPEX di Cabang)-all"},
+      {"aspect": "Finance Operation Aspect", "no": "3B", "text": "Apakah cabang memahami bahwa voucher payment apabila dibutuhkan dapat dilakukan pencetakan melalui evopay ?-all"},
+      {"aspect": "Finance Operation Aspect", "no": "4", "text": "Apakah dokumentasi lampiran VP evopay terdokumentasi filling dengan baik ?-Fin & Kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "5", "text": "Apakah petugas di cabang memahami utilisasi dashboard monitoring evopay ?-Fin & Kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "6", "text": "Apakah petugas di cabang memahami adanya konsep Mid Month closing untuk proses Balancing Bank ?-Fin & Kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "7", "text": "Apakah proses pengisian pada sistem NIS Accounting yang dilakukan oleh cabang sudah benar pada penerimaan transaksi non tunai ?-Fin & Kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "8", "text": "Berikan catatan tanggapan atas proses pengisian pada sistem NIS Accounting khususnya pada transaksi penerimaan transasksi non tunai?-Fin & Kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "9", "text": "Apakah TIMLO berjalan dengan lancar pada cabang anda ?-Fin & adm sales"},
+      {"aspect": "Finance Operation Aspect", "no": "10", "text": "Berikan tanggapan atas Project TIMLO yang dilakukan-Fin & adm sales"},
+      {"aspect": "Finance Operation Aspect", "no": "11", "text": "Apakah selain admin sales, finance, memahami konsep Project Timlo ? (Tolong sampling ke bagian lain)-all"},
+      {"aspect": "Finance Operation Aspect", "no": "12", "text": "Apakah form TIMLO terdokumentasi dengan baik ?-all"},
+      {"aspect": "Finance Operation Aspect", "no": "13", "text": "Silahkan vouching 10 Dokumen Timlo (10 sample)-Fin & adm sales"},
+      {"aspect": "Finance Operation Aspect", "no": "14", "text": "Apakah LHK sudah ditandatangani lengkap ?-Fin & adm sales"},
+      {"aspect": "Finance Operation Aspect", "no": "15", "text": "Silahkan vouching 10 Dokumen LHK (10 sample)-Fin & adm sales"},
+      {"aspect": "Finance Operation Aspect", "no": "16", "text": "Apakah isi brangkas uang hanya digunakan untuk menyimpan Uang Tunai?-Fin & Kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "17", "text": "Apabila ada uang selain uang operasional, tolong berikan penjelasan?-Fin kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "18", "text": "Setelah anda suprising Cash Opname, apakah balance antara Denominasi dengan uang di Brankas ?- Kasir"},
+      {"aspect": "Finance Operation Aspect", "no": "19", "text": "Apa masukan untuk Finance Operation Aspect ?-all"},
 
       // 4. Financial Business & Analyst Aspect (20)
-      {"aspect": "Financial Business & Analyst", "no": "1", "text": "Sudahkah kasir melakukan edukasi untuk pelanggan melakukan pembayaran cashless ?"},
-      {"aspect": "Financial Business & Analyst", "no": "2", "text": "Selain kasir, apakah admin lain memahami atas transaksi cashless ?"},
-      {"aspect": "Financial Business & Analyst", "no": "3", "text": "Apakah ada admin yang tidak memahami Utilisi program cashless yang dijalankan ?"},
-      {"aspect": "Financial Business & Analyst", "no": "4", "text": "Apakah dokumentasi SPK di cabang dilakukan filling dengan baik ?"},
-      {"aspect": "Financial Business & Analyst", "no": "5", "text": "Silahkan vouching 10 SPK (10 sample)"},
-      {"aspect": "Financial Business & Analyst", "no": "6", "text": "Sebutkan 3 Project Finance yang ada pada cabang anda"},
-      {"aspect": "Financial Business & Analyst", "no": "7", "text": "Masih adakah informasi rekening konvensial (manual) pada area kasir ?"},
-      {"aspect": "Financial Business & Analyst", "no": "8", "text": "Inisasi di Cabang apa yang dilakukan untuk mandatori cashless ?"},
-      {"aspect": "Financial Business & Analyst", "no": "9", "text": "Apakah sudah ada media edukasi VA, QRIS & Transfer Bank pada Kasir ?"},
-      {"aspect": "Financial Business & Analyst", "no": "10", "text": "Bagaiamana proses ploting SPK yang ada di cabang ?"},
-      {"aspect": "Financial Business & Analyst", "no": "11", "text": "Sebutkan 3 project apa yang diharapkan cabang untuk didevelop oleh HO ?"},
-      {"aspect": "Financial Business & Analyst", "no": "12", "text": "Apakah mandatory item pada form SPK sudah terisi lengkap (Tandatangan lengkap, dll)?"},
-      {"aspect": "Financial Business & Analyst", "no": "13", "text": "Dalam kondisi seperti apa yang seharusnya menggunakan voucher manual?"},
-      {"aspect": "Financial Business & Analyst", "no": "14", "text": "Apakah ada Berita Acara Stock Opname Mobil (Unit) Bulanan ?"},
-      {"aspect": "Financial Business & Analyst", "no": "15", "text": "Apakah ada Laporan BPKB Opname setiap Bulan ?"},
-      {"aspect": "Financial Business & Analyst", "no": "16", "text": "Silahkan vouching 10 Pengambilan BPKB (10 sample)"},
-      {"aspect": "Financial Business & Analyst", "no": "17", "text": "Silahkan sampling ke 3 admin, apakah memahami SOP Pengambilan BPKB ?"},
-      {"aspect": "Financial Business & Analyst", "no": "18", "text": "Apakah dokumentasi pembelian asset terdokumentasi filling dengan baik ?"},
-      {"aspect": "Financial Business & Analyst", "no": "19", "text": "Apakah kelengkapan dokumentasi pembelian asset di cabang sudah lengkap ?"},
-      {"aspect": "Financial Business & Analyst", "no": "20", "text": "Apa masukan untuk Finance Business & Analyst Aspect ?"}
+      {"aspect": "Financial Business & Analyst", "no": "1", "text": "Sudahkah kasir melakukan edukasi untuk pelanggan melakukan pembayaran cashless ?-Kasir"},
+      {"aspect": "Financial Business & Analyst", "no": "2", "text": "Selain kasir, apakah admin lain memahami atas transaksi cashless ?- all"},
+      {"aspect": "Financial Business & Analyst", "no": "3", "text": "Apakah ada admin yang tidak memahami Utilisi Virtual account? tolong sampling ke 3 admin ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "4", "text": "Apakah dokumentasi SPK di cabang dilakukan filling dengan baik ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "5", "text": "Sebutkan 3 Project Finance yang ada pada cabang anda-all"},
+      {"aspect": "Financial Business & Analyst", "no": "6", "text": "Masih adakah informasi rekening konvensional (manual) pada area kasir ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "7", "text": "Inisasi di Cabang apa yang dilakukan untuk mandatori cashless ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "8", "text": "Apakah sudah ada media edukasi VA, QRIS & Transfer Bank pada Kasir ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "9", "text": "Bagaiamana proses ploting SPK yang ada di admin sales, tolong ceritakan ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "10", "text": "Sebutkan 3 project apa yang diharapkan cabang untuk finance kedepan? Berikan alasan dan tujtuannya ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "11", "text": "Apakah mandatory item pada form SPK sudah terisi lengkap (Tandatangan lengkap, dll)?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "12", "text": "Dalam kondisi seperti apa yang seharusnya perlu untuk dilakukan konfirmasi transaksi ke customer ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "13", "text": "Apakah ada Berita Acara Stock Opname Mobil (Unit) Bulanan ?- Fin & adm sales"},
+      {"aspect": "Financial Business & Analyst", "no": "14", "text": "Apakah ada Laporan BPKB Opname setiap Bulan ?-Fin & Adm sales"}, 
+      {"aspect": "Financial Business & Analyst", "no": "15", "text": "Silahkan sampling ke 3 admin, apakah memahami konsep mekanisme retur invoice mobil/service ?-all"},
+      {"aspect": "Financial Business & Analyst", "no": "16", "text": "Apakah dokumentasi pembelian asset terdokumentasi filling dengan baik ?- GA & Fin"},
+      {"aspect": "Financial Business & Analyst", "no": "17", "text": "Apakah kelengkapan dokumentasi pembelian asset di cabang sudah lengkap ?- GA & Fin"},
+      {"aspect": "Financial Business & Analyst", "no": "18", "text": "Apa masukan untuk Finance Business & Analyst Aspect ?-all"}
     ];
 
     let currentStep = 0;
@@ -616,14 +612,19 @@
             <p class="font-bold text-gray-800 text-xs md:text-sm">${q.no}. ${q.text}</p>
             <div class="flex gap-6 items-center bg-white p-2 px-4 rounded-md border border-gray-100 w-fit">
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="score_${index}" value="YES" checked class="w-4 h-4 text-blue-600">
+                <input type="radio" name="score_${index}" value="YES" class="w-4 h-4 text-blue-600">
                 <span class="text-xs font-bold text-green-600">YES</span>
               </label>
               <label class="flex items-center gap-2 cursor-pointer">
                 <input type="radio" name="score_${index}" value="NO" class="w-4 h-4 text-red-600">
                 <span class="text-xs font-bold text-red-600">NO</span>
               </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="score_${index}" value="N/A" class="w-4 h-4 text-gray-400">
+                <span class="text-xs font-bold text-gray-400">N/A</span>
+              </label>
             </div>
+            <p class="text-[10px] text-gray-400 italic">* Boleh dikosongkan/pilih N/A jika pertanyaan tidak berlaku. Pertanyaan yang di-N/A/kosong tidak dihitung dalam total skor.</p>
             <div>
               <label class="block text-[10px] font-semibold text-gray-400 mb-1">Catatan Khusus / Temuan Lapangan:</label>
               <textarea id="comment_${index}" rows="2" placeholder="Tulis rincian temuan atau penjelasan di sini..." class="w-full p-2 text-xs border border-gray-200 rounded-lg bg-white focus:ring focus:ring-blue-100"></textarea>
@@ -824,7 +825,8 @@
       let filesToRead = [];
 
       rawQuestions.forEach((q, index) => {
-        const score = document.querySelector(`input[name="score_${index}"]:checked`).value;
+        const scoreInput = document.querySelector(`input[name="score_${index}"]:checked`);
+        const score = scoreInput ? scoreInput.value : "N/A"; // belum dijawab = dianggap N/A (blank), di-exclude dari total skor
         const comment = document.getElementById(`comment_${index}`).value || "No remarks";
         const fileElement = document.getElementById(`file_${index}`).files[0];
 
