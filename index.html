@@ -44,14 +44,18 @@
             <span>4. FBA (Analyst)</span>
           </button>
 
+          <button id="tab-4" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all text-slate-300 hover:bg-slate-800 hover:text-white" onclick="switchStep(4)">
+            <span>5. Accounting</span>
+          </button>
+
           <div class="my-4 border-t border-slate-800"></div>
           <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Action & Report</p>
 
-          <button id="tab-4" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all text-purple-300 hover:bg-slate-800 hover:text-purple-100" onclick="switchStep(4)">
+          <button id="tab-5" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all text-purple-300 hover:bg-slate-800 hover:text-purple-100" onclick="switchStep(5)">
             <span>📊 MENU KOLEKTIF</span>
           </button>
           
-          <button id="tab-5" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all text-green-300 hover:bg-slate-800 hover:text-green-100" onclick="switchStep(5)">
+          <button id="tab-6" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all text-green-300 hover:bg-slate-800 hover:text-green-100" onclick="switchStep(6)">
             <span>📑 REPORT SUMMARY</span>
           </button>
         </nav>
@@ -130,9 +134,10 @@
           <div id="step-container-1" class="step-section step-hide space-y-6"></div>
           <div id="step-container-2" class="step-section step-hide space-y-6"></div>
           <div id="step-container-3" class="step-section step-hide space-y-6"></div>
+          <div id="step-container-4" class="step-section step-hide space-y-6"></div>
         </form>
 
-       <div id="step-container-4" class="step-section step-hide space-y-6 no-print">
+       <div id="step-container-5" class="step-section step-hide space-y-6 no-print">
   <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl">
     <h3 class="text-sm font-bold text-purple-900 mb-0.5">Pengisian Konsolidasi Data Kolektif Cabang</h3>
     <p class="text-[11px] text-purple-700">Form ini mencatat summary instrumen pendukung audit per cabang secara kolektif.</p>
@@ -363,7 +368,7 @@
           </div>
         </div>
 
-        <div id="step-container-5" class="step-section step-hide space-y-6">
+        <div id="step-container-6" class="step-section step-hide space-y-6">
           
           <div class="p-4 bg-green-50 border border-green-200 rounded-xl flex flex-wrap items-center justify-between gap-4 no-print">
             <div>
@@ -398,7 +403,7 @@
 
             <div>
               <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Breakdown Compliance Per Aspek</h4>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-[10px]">
+              <div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-center text-[10px]">
                 <div class="p-3 border border-gray-200 rounded-lg bg-white">
                   <p class="font-bold text-gray-500">General Aspect</p>
                   <p class="text-base font-extrabold text-slate-800 mt-1" id="score_gas">-</p>
@@ -414,6 +419,10 @@
                 <div class="p-3 border border-gray-200 rounded-lg bg-white">
                   <p class="font-bold text-gray-500">Analyst Aspect</p>
                   <p class="text-base font-extrabold text-slate-800 mt-1" id="score_fba">-</p>
+                </div>
+                <div class="p-3 border border-gray-200 rounded-lg bg-white">
+                  <p class="font-bold text-gray-500">Accounting Aspect</p>
+                  <p class="text-base font-extrabold text-slate-800 mt-1" id="score_acc">-</p>
                 </div>
               </div>
             </div>
@@ -451,11 +460,12 @@
                       <th class="border border-gray-200 p-2">Item Defisiensi Pertanyaan</th>
                       <th class="border border-gray-200 p-2 w-40">Responden Penjawab "NO"</th>
                       <th class="border border-gray-200 p-2">Catatan Khusus Auditor</th>
+                      <th class="border border-gray-200 p-2 w-24 text-center">Lampiran</th>
                     </tr>
                   </thead>
                   <tbody id="findingsTableBody">
                     <tr>
-                      <td colspan="5" class="text-center p-4 text-gray-400">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td>
+                      <td colspan="6" class="text-center p-4 text-gray-400">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td>
                     </tr>
                   </tbody>
                 </table>
@@ -525,73 +535,519 @@
 
     // DATA PERTANYAAN LO AUDIT
     const rawQuestions = [
-      // 1. General Aspect (10)
-      {"aspect": "General Aspect", "no": "1", "text": "Apakah SGA Admin berjalan rutin (Min 1x 1Bulan) ?-all"},
-      {"aspect": "General Aspect", "no": "2", "text": "Apakah admin masing-masing telah diberikan KPI Personal ?-all"},
-      {"aspect": "General Aspect", "no": "3", "text": "Apakah sudah ada Job Description pada masing-masing bagian ?-all"},
-      {"aspect": "General Aspect", "no": "4", "text": "Pemahaman project Finance HO untuk level Admin di Cabang-all"},
-      {"aspect": "General Aspect", "no": "5", "text": "Apakah sudah memiliki Brankas khusus untuk BPKB yang terpisah?-all"},
-      {"aspect": "General Aspect", "no": "6", "text": "Apakah sudah di sosialisasikan terkait dengan SOP Pengambilan BPKB ?-all"},
-      {"aspect": "General Aspect", "no": "7", "text": "Apakah sudah ada pengadaan webcam yang digunakan untuk foto pengambilan BPKB ?-all"},
-      {"aspect": "General Aspect", "no": "8", "text": "Apakah brankas BPKB telah diawasi oleh CCTV ?-all"},
-      {"aspect": "General Aspect", "no": "9", "text": "Apakah ada inisiasi cabang untuk melakukan konfirmasi penerimaan pembayaran ke pelanggan ?-all"},
-      {"aspect": "General Aspect", "no": "10", "text": "Berikan foto atas inisiasi konfirmasi yang telah dilakukan-all"},
-
-      // 2. AR & AP Management Aspect (12)
-      {"aspect": "AR & AP Management Aspect", "no": "1", "text": "Apakah pembayaran hutang & piutang secara digital sudah efektif ?-Fin & Kasir"},
-      {"aspect": "AR & AP Management Aspect", "no": "2", "text": "Apakah sudah efektif proses metode penagihan subsidi dari Cabang ke HO ?-Fin & adm sales"},
-      {"aspect": "AR & AP Management Aspect", "no": "3", "text": "Bagaimana pemahaman mekanisme penagihan subsidi ?-Fin & adm sales"},
-      {"aspect": "AR & AP Management Aspect", "no": "4", "text": "Apakah dokumentasi penagihan subsidi dari cabang ke HO terfilling dengan baik ?-Fin & adm sales"},
-      {"aspect": "AR & AP Management Aspect", "no": "5", "text": "Apakah sampling dokumentasi Kuitansi Subsidi dari cabang ke HO sudah lengkap ?-Fin & adm sales"},
-      {"aspect": "AR & AP Management Aspect", "no": "6", "text": "Apakah sudah menggunakan tools NIS AR Monitoring?-Fin & adm bengkel gr/bp"},
-      {"aspect": "AR & AP Management Aspect", "no": "7", "text": "Apakah sudah mempunyai daftar konfirmasi AR yang terdokumentasi dengan baik?-Fin & adm bengkel gr/bp"},
-      {"aspect": "AR & AP Management Aspect", "no": "8", "text": "Apakah dokumentasi penagihan leasing terfilling dengan baik ?-Fin & adm sales"},
-      {"aspect": "AR & AP Management Aspect", "no": "9", "text": "Apakah tanda terima penagihan leasing terdokumentasi dengan baik ?-Fin & adm sales"},
-      {"aspect": "AR & AP Management Aspect", "no": "10", "text": "Silahkan vouching tagihan leasing (10 sample)-Fin & adm sales"},
-      {"aspect": "AR & AP Management Aspect", "no": "11", "text": "Apa masukan untuk AR & AP Aspect ?-all"},
-
-      // 3. Finance Operation Aspect (21)
-      {"aspect": "Finance Operation Aspect", "no": "1", "text": "Apakah voucher payment (kertas biru) masih digunakan ?-all"},
-      {"aspect": "Finance Operation Aspect", "no": "2", "text": "Apabila masih digunakan, silahkan beri penjelasan alasan penggunaan voucher payment (kertas biru ) tersebut ?-all"},
-      {"aspect": "Finance Operation Aspect", "no": "3A", "text": "Apabila kertas biru voucher payment di tiadaan, apakah itu memungkinkan di cabang ? (Untuk mengurangi OPEX di Cabang)-all"},
-      {"aspect": "Finance Operation Aspect", "no": "3B", "text": "Apakah cabang memahami bahwa voucher payment apabila dibutuhkan dapat dilakukan pencetakan melalui evopay ?-all"},
-      {"aspect": "Finance Operation Aspect", "no": "4", "text": "Apakah dokumentasi lampiran VP evopay terdokumentasi filling dengan baik ?-Fin & Kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "5", "text": "Apakah petugas di cabang memahami utilisasi dashboard monitoring evopay ?-Fin & Kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "6", "text": "Apakah petugas di cabang memahami adanya konsep Mid Month closing untuk proses Balancing Bank ?-Fin & Kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "7", "text": "Apakah proses pengisian pada sistem NIS Accounting yang dilakukan oleh cabang sudah benar pada penerimaan transaksi non tunai ?-Fin & Kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "8", "text": "Berikan catatan tanggapan atas proses pengisian pada sistem NIS Accounting khususnya pada transaksi penerimaan transasksi non tunai?-Fin & Kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "9", "text": "Apakah TIMLO berjalan dengan lancar pada cabang anda ?-Fin & adm sales"},
-      {"aspect": "Finance Operation Aspect", "no": "10", "text": "Berikan tanggapan atas Project TIMLO yang dilakukan-Fin & adm sales"},
-      {"aspect": "Finance Operation Aspect", "no": "11", "text": "Apakah selain admin sales, finance, memahami konsep Project Timlo ? (Tolong sampling ke bagian lain)-all"},
-      {"aspect": "Finance Operation Aspect", "no": "12", "text": "Apakah form TIMLO terdokumentasi dengan baik ?-all"},
-      {"aspect": "Finance Operation Aspect", "no": "13", "text": "Silahkan vouching 10 Dokumen Timlo (10 sample)-Fin & adm sales"},
-      {"aspect": "Finance Operation Aspect", "no": "14", "text": "Apakah LHK sudah ditandatangani lengkap ?-Fin & adm sales"},
-      {"aspect": "Finance Operation Aspect", "no": "15", "text": "Silahkan vouching 10 Dokumen LHK (10 sample)-Fin & adm sales"},
-      {"aspect": "Finance Operation Aspect", "no": "16", "text": "Apakah isi brangkas uang hanya digunakan untuk menyimpan Uang Tunai?-Fin & Kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "17", "text": "Apabila ada uang selain uang operasional, tolong berikan penjelasan?-Fin kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "18", "text": "Setelah anda suprising Cash Opname, apakah balance antara Denominasi dengan uang di Brankas ?- Kasir"},
-      {"aspect": "Finance Operation Aspect", "no": "19", "text": "Apa masukan untuk Finance Operation Aspect ?-all"},
-
-      // 4. Financial Business & Analyst Aspect (20)
-      {"aspect": "Financial Business & Analyst", "no": "1", "text": "Sudahkah kasir melakukan edukasi untuk pelanggan melakukan pembayaran cashless ?-Kasir"},
-      {"aspect": "Financial Business & Analyst", "no": "2", "text": "Selain kasir, apakah admin lain memahami atas transaksi cashless ?- all"},
-      {"aspect": "Financial Business & Analyst", "no": "3", "text": "Apakah ada admin yang tidak memahami Utilisi Virtual account? tolong sampling ke 3 admin ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "4", "text": "Apakah dokumentasi SPK di cabang dilakukan filling dengan baik ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "5", "text": "Sebutkan 3 Project Finance yang ada pada cabang anda-all"},
-      {"aspect": "Financial Business & Analyst", "no": "6", "text": "Masih adakah informasi rekening konvensional (manual) pada area kasir ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "7", "text": "Inisasi di Cabang apa yang dilakukan untuk mandatori cashless ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "8", "text": "Apakah sudah ada media edukasi VA, QRIS & Transfer Bank pada Kasir ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "9", "text": "Bagaiamana proses ploting SPK yang ada di admin sales ke sales, tolong ceritakan ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "10", "text": "Sebutkan 3 project apa yang diharapkan cabang untuk finance kedepan? Berikan alasan dan tujtuannya ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "11", "text": "Apakah mandatory item pada form SPK sudah terisi lengkap (Tandatangan lengkap, dll)?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "12", "text": "Dalam kondisi seperti apa yang seharusnya perlu untuk dilakukan konfirmasi transaksi ke customer ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "13", "text": "Apakah ada Berita Acara Stock Opname Mobil (Unit) Bulanan ?- Fin & adm sales"},
-      {"aspect": "Financial Business & Analyst", "no": "14", "text": "Apakah ada Laporan BPKB Opname setiap Bulan ?-Fin & Adm sales"}, 
-      {"aspect": "Financial Business & Analyst", "no": "15", "text": "Silahkan sampling ke 3 admin, apakah memahami konsep mekanisme retur invoice mobil/service ?-all"},
-      {"aspect": "Financial Business & Analyst", "no": "16", "text": "Apakah dokumentasi pembelian asset terdokumentasi filling dengan baik ?- GA & Fin"},
-      {"aspect": "Financial Business & Analyst", "no": "17", "text": "Apakah kelengkapan dokumentasi pembelian asset di cabang sudah lengkap ?- GA & Fin"},
-      {"aspect": "Financial Business & Analyst", "no": "18", "text": "Apa masukan untuk Finance Business & Analyst Aspect ?-all"}
-    ];
+      {
+            "aspect": "General Aspect",
+            "no": "1",
+            "text": "Apakah SGA Admin berjalan rutin (Min 1x 1Bulan) ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "2",
+            "text": "Apakah admin masing-masing telah diberikan KPI Personal ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "3",
+            "text": "Apakah sudah ada Job Description pada masing-masing bagian ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "4",
+            "text": "Pemahaman project Finance HO untuk level Admin di Cabang",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "5",
+            "text": "Apakah sudah memiliki Brankas khusus untuk BPKB yang terpisah?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "6",
+            "text": "Apakah sudah di sosialisasikan terkait dengan SOP Pengambilan BPKB ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "7",
+            "text": "Apakah sudah ada pengadaan webcam yang digunakan untuk foto pengambilan BPKB ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "8",
+            "text": "Apakah brankas BPKB telah diawasi oleh CCTV ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "9",
+            "text": "Apakah ada inisiasi cabang untuk melakukan konfirmasi penerimaan pembayaran ke pelanggan ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "General Aspect",
+            "no": "10",
+            "text": "Berikan foto atas inisiasi konfirmasi yang telah dilakukan",
+            "role": "all",
+            "type": "foto"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "1",
+            "text": "Apakah pembayaran hutang & piutang secara digital sudah efektif ?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "2",
+            "text": "Apakah sudah efektif proses metode penagihan subsidi dari Cabang ke HO ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "3",
+            "text": "Bagaimana pemahaman mekanisme penagihan subsidi ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "4",
+            "text": "Apakah dokumentasi penagihan subsidi dari cabang ke HO terfilling dengan baik ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "5",
+            "text": "Silahkan vouching tagihan subsidi cabang to HO (10 sample)",
+            "role": "Fin & adm sales",
+            "type": "vouching_kolektif"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "6",
+            "text": "Apakah sudah menggunakan tools NIS AR Monitoring?",
+            "role": "Fin & adm bengkel gr/bp",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "6A",
+            "text": "Apabila tidak, menggunakan tools apa ?",
+            "role": "Fin & adm bengkel gr/bp",
+            "type": "opencomment",
+            "showIf": {
+                  "no": "6",
+                  "equals": "NO"
+            }
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "7",
+            "text": "Apakah sudah mempunyai daftar konfirmasi AR yang terdokumentasi dengan baik?",
+            "role": "Fin & adm bengkel gr/bp",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "8",
+            "text": "Apakah dokumentasi penagihan leasing terfilling dengan baik ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "9",
+            "text": "Apakah tanda terima penagihan leasing terdokumentasi dengan baik ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "10",
+            "text": "Silahkan vouching tagihan leasing (10 sample)",
+            "role": "Fin & adm sales",
+            "type": "vouching10"
+      },
+      {
+            "aspect": "AR & AP Management Aspect",
+            "no": "11",
+            "text": "Apa masukan untuk AR & AP Aspect ?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "1",
+            "text": "Apakah voucher payment (kertas biru) masih digunakan ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "2",
+            "text": "Apabila masih digunakan, silahkan beri penjelasan alasan penggunaan voucher payment (kertas biru) tersebut ?",
+            "role": "all",
+            "type": "opencomment",
+            "showIf": {
+                  "no": "1",
+                  "equals": "YES"
+            }
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "3A",
+            "text": "Apabila kertas biru voucher payment ditiadakan, apakah itu memungkinkan di cabang ? (Untuk mengurangi OPEX di Cabang)",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "3B",
+            "text": "Apakah cabang memahami bahwa voucher payment apabila dibutuhkan dapat dilakukan pencetakan melalui evopay ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "4",
+            "text": "Apakah dokumentasi lampiran VP evopay terdokumentasi filling dengan baik ?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "5",
+            "text": "Silahkan vouching Evopay (10 sample)",
+            "role": "Fin & Kasir",
+            "type": "vouching_kolektif"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "6",
+            "text": "Apakah petugas di cabang memahami utilisasi dashboard monitoring evopay ?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "7",
+            "text": "Apakah petugas di cabang memahami adanya konsep Mid Month closing untuk proses Balancing Bank ?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "8",
+            "text": "Apakah proses pengisian pada sistem NIS Accounting yang dilakukan oleh cabang sudah benar pada penerimaan transaksi non tunai ?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "9",
+            "text": "Berikan catatan tanggapan atas proses pengisian pada sistem NIS Accounting khususnya pada transaksi penerimaan transaksi non tunai?",
+            "role": "Fin & Kasir",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "10",
+            "text": "Apakah TIMLO berjalan dengan lancar pada cabang anda ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "11",
+            "text": "Berikan tanggapan atas Project TIMLO yang dilakukan",
+            "role": "Fin & adm sales",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "12",
+            "text": "Apakah selain admin sales, finance, memahami konsep Project Timlo ? (Tolong sampling ke bagian lain)",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "13",
+            "text": "Apakah form TIMLO terdokumentasi dengan baik ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "14",
+            "text": "Silahkan vouching 10 Dokumen Timlo (10 sample)",
+            "role": "Fin & adm sales",
+            "type": "vouching10"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "15",
+            "text": "Apakah LHK sudah ditandatangani lengkap ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "16",
+            "text": "Silahkan vouching 10 Dokumen LHK (10 sample)",
+            "role": "Fin & adm sales",
+            "type": "vouching10"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "17",
+            "text": "Apakah isi brangkas uang hanya digunakan untuk menyimpan Uang Tunai?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "18",
+            "text": "Apabila ada uang selain uang operasional, tolong berikan penjelasan?",
+            "role": "Fin & Kasir",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "19",
+            "text": "Setelah anda suprising Cash Opname, apakah balance antara Denominasi dengan uang di Brankas ?",
+            "role": "Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Finance Operation Aspect",
+            "no": "20",
+            "text": "Apa masukan untuk Finance Operation Aspect ?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "1",
+            "text": "Sudahkah kasir melakukan edukasi untuk pelanggan melakukan pembayaran non tunai ?",
+            "role": "Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "2",
+            "text": "Selain kasir, apakah admin lain memahami cara kerja penerimaan transaksi non tunai QRIS melalui NICX ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "3",
+            "text": "Apakah ada admin yang tidak memahami Utilisasi Virtual Account ? Tolong sampling ke 3 admin",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "4",
+            "text": "Apakah dokumentasi SPK di cabang dilakukan filling dengan baik ?",
+            "role": "adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "5",
+            "text": "Silahkan vouching 10 SPK (10 sample)",
+            "role": "adm sales",
+            "type": "vouching_kolektif"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "6",
+            "text": "Sebutkan 3 Project Finance yang ada pada 3 Tahun terakhir ini ?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "7",
+            "text": "Masih adakah informasi rekening konvensional di Cabang (Kartunama, Banner, Form)",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "8",
+            "text": "Inisiasi di Cabang apa yang dilakukan untuk menaikkan transaksi Cashless ?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "9",
+            "text": "Apakah sudah ada media edukasi VA, QRIS di masing-masing cabang ?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "10",
+            "text": "Bagaimana proses ploting SPK yang ada di Admin Sales, tolong bisa diceritakan",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "11",
+            "text": "Sebutkan 3 project apa yang diharapkan cabang untuk Finance kedepan ? Serta berikan alasan dan tujuannya ?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "12",
+            "text": "Apakah mandatory item pada form SPK sudah terisi sesuai ketentuan?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "13",
+            "text": "Dalam kondisi seperti apa yang seharusnya perlu untuk dilakukan konfirmasi transaksi ke Customer?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "14",
+            "text": "Apakah ada Berita Acara Stock Opname Mobil setiap Bulan ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "15",
+            "text": "Apakah ada Laporan BPKB Opname setiap Bulan ?",
+            "role": "Fin & adm sales",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "16",
+            "text": "Silahkan vouching 10 Pengambilan BPKB (10 sample)",
+            "role": "all",
+            "type": "vouching_kolektif"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "17",
+            "text": "Silahkan sampling ke 3 admin, apakah memahami konsep mekanisme retur invoice mobil atau service ?",
+            "role": "all",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "18",
+            "text": "Apakah dokumentasi pembelian asset terdokumentasi dengan rapi ? (procurement)",
+            "role": "GA & Finance",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "19",
+            "text": "Apakah kelengkapan dokumentasi pembelian asset terdokumentasi dengan baik ? (Penawaran, Proposal, PO, Invoice, Faktur Pajak, Berita Acara Serah Terima)",
+            "role": "GA & Finance",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Financial Business & Analyst",
+            "no": "20",
+            "text": "Apa masukan untuk Financial Business & Analyst Aspect ?",
+            "role": "all",
+            "type": "opencomment"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "1",
+            "text": "Apakah proses Input Uang Muka pada Transaksi Piutang Mobil yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "2",
+            "text": "Apakah proses Input Jaminan Pemesanan pada Transaksi Piutang Mobil yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "3",
+            "text": "Apakah proses Input T-Care pada Transaksi Piutang Mobil yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "4",
+            "text": "Apakah proses Input Pelunasan Piutang Mobil (Invoice N) pada Transaksi Piutang Mobil yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "5",
+            "text": "Apakah proses Input Pelunasan Piutang bengkel (Invoice E/G) pada Transaksi Piutang yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "6",
+            "text": "Apakah proses Input Pelunasan Piutang Part (Invoice A/B/C) pada Transaksi Piutang yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "7",
+            "text": "Apakah proses Input Tanda Jadi Part pada Transaksi Piutang yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "8",
+            "text": "Apakah proses Input Unidentified pada Transaksi Piutang yang dilakukan oleh cabang sudah benar?",
+            "role": "Fin & Kasir",
+            "type": "yesno"
+      },
+      {
+            "aspect": "Accounting Aspect",
+            "no": "9",
+            "text": "Bagaimana Cara Dealer Melunasin Piutang NRM apakah sudah sesuai dengan rincian?",
+            "role": "Fin & Kasir",
+            "type": "opencomment"
+      }
+];
 
     let currentStep = 0;
 
@@ -603,41 +1059,127 @@
         else if (q.aspect === "AR & AP Management Aspect") containerId = "step-container-1";
         else if (q.aspect === "Finance Operation Aspect") containerId = "step-container-2";
         else if (q.aspect === "Financial Business & Analyst") containerId = "step-container-3";
-        
+        else if (q.aspect === "Accounting Aspect") containerId = "step-container-4";
+
         const container = document.getElementById(containerId);
         if (container) {
           const qBox = document.createElement("div");
           qBox.className = "p-4 border border-gray-100 rounded-xl bg-gray-50 shadow-sm space-y-3";
-          qBox.innerHTML = `
-            <p class="font-bold text-gray-800 text-xs md:text-sm">${q.no}. ${q.text}</p>
-            <div class="flex gap-6 items-center bg-white p-2 px-4 rounded-md border border-gray-100 w-fit">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="score_${index}" value="YES" class="w-4 h-4 text-blue-600">
-                <span class="text-xs font-bold text-green-600">YES</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="score_${index}" value="NO" class="w-4 h-4 text-red-600">
-                <span class="text-xs font-bold text-red-600">NO</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="score_${index}" value="N/A" class="w-4 h-4 text-gray-400">
-                <span class="text-xs font-bold text-gray-400">N/A</span>
-              </label>
-            </div>
-            <p class="text-[10px] text-gray-400 italic">* Boleh dikosongkan/pilih N/A jika pertanyaan tidak berlaku. Pertanyaan yang di-N/A/kosong tidak dihitung dalam total skor.</p>
+          qBox.dataset.qIndex = index;
+          if (q.showIf) {
+            qBox.classList.add("step-hide");
+            qBox.dataset.showIfNo = q.showIf.no;
+            qBox.dataset.showIfEquals = q.showIf.equals;
+          }
+
+          const roleBadges = roleBadgeHtml(q.role);
+
+          let answerBlockHtml = "";
+          if (q.type === "foto") {
+            answerBlockHtml = `<p class="text-[10px] text-gray-400 italic">* Pertanyaan ini hanya perlu lampiran foto/berkas, tidak perlu YES/NO.</p>`;
+          } else if (q.type === "opencomment") {
+            answerBlockHtml = `<p class="text-[10px] text-gray-400 italic">* Pertanyaan open comment, tidak dihitung dalam skor.</p>`;
+          } else if (q.type === "vouching10") {
+            answerBlockHtml = `<p class="text-[10px] text-gray-400 italic">* Upload sampai 10 file bukti vouching. Tidak dihitung dalam skor.</p>`;
+          } else if (q.type === "vouching_kolektif") {
+            answerBlockHtml = `<p class="text-[10px] text-purple-600 italic font-semibold">Bukti untuk item ini tersimpan di MENU KOLEKTIF, tidak perlu upload di sini.</p>`;
+          } else {
+            answerBlockHtml = `
+              <div class="flex gap-6 items-center bg-white p-2 px-4 rounded-md border border-gray-100 w-fit">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="score_${index}" value="YES" class="w-4 h-4 text-blue-600" onchange="handleAnswerChange(${index})">
+                  <span class="text-xs font-bold text-green-600">YES</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" name="score_${index}" value="NO" class="w-4 h-4 text-red-600" onchange="handleAnswerChange(${index})">
+                  <span class="text-xs font-bold text-red-600">NO</span>
+                </label>
+              </div>
+            `;
+          }
+
+          let commentBlockHtml = (q.type === "vouching_kolektif") ? "" : `
             <div>
               <label class="block text-[10px] font-semibold text-gray-400 mb-1">Catatan Khusus / Temuan Lapangan:</label>
               <textarea id="comment_${index}" rows="2" placeholder="Tulis rincian temuan atau penjelasan di sini..." class="w-full p-2 text-xs border border-gray-200 rounded-lg bg-white focus:ring focus:ring-blue-100"></textarea>
             </div>
-            <div>
-              <label class="block text-[10px] font-semibold text-gray-400 mb-1">Upload Bukti PDF/Foto Berkas (Opsional):</label>
-              <input type="file" id="file_${index}" class="block w-full text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+          `;
+
+          let uploadBlockHtml;
+          if (q.type === "vouching_kolektif") {
+            uploadBlockHtml = "";
+          } else if (q.type === "vouching10") {
+            uploadBlockHtml = `
+              <div>
+                <label class="block text-[10px] font-semibold text-gray-400 mb-1">Upload Bukti Vouching (maks 10 file):</label>
+                <input type="file" id="file_${index}" multiple class="block w-full text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+              </div>
+            `;
+          } else {
+            uploadBlockHtml = `
+              <div>
+                <label class="block text-[10px] font-semibold text-gray-400 mb-1">Upload Bukti PDF/Foto Berkas ${q.type === "foto" ? "(Wajib)" : "(Opsional)"}:</label>
+                <input type="file" id="file_${index}" class="block w-full text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+              </div>
+            `;
+          }
+
+          qBox.innerHTML = `
+            <div class="flex items-start justify-between gap-2 flex-wrap">
+              <p class="font-bold text-gray-800 text-xs md:text-sm flex-1">${q.no}. ${q.text}</p>
+              ${roleBadges}
             </div>
+            ${answerBlockHtml}
+            ${commentBlockHtml}
+            ${uploadBlockHtml}
           `;
           container.appendChild(qBox);
         }
       });
+      updateConditionalVisibility();
     };
+
+    const ROLE_COLORS = {
+      "fin": "bg-blue-100 text-blue-700",
+      "kasir": "bg-orange-100 text-orange-700",
+      "adm sales": "bg-purple-100 text-purple-700",
+      "adm bengkel gr/bp": "bg-teal-100 text-teal-700",
+      "ga": "bg-green-100 text-green-700",
+      "all": "bg-gray-100 text-gray-500"
+    };
+
+    function roleBadgeHtml(roleStr) {
+      if (!roleStr || roleStr.trim().toLowerCase() === "all") {
+        return `<span class="text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap ${ROLE_COLORS["all"]}">Semua Role</span>`;
+      }
+      const parts = roleStr.split(/&|,/).map(p => p.trim()).filter(Boolean);
+      return parts.map(p => {
+        const key = p.toLowerCase();
+        const color = ROLE_COLORS[key] || "bg-slate-100 text-slate-600";
+        const label = p.replace(/\b\w/g, c => c.toUpperCase());
+        return `<span class="text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap ${color}">${label}</span>`;
+      }).join(" ");
+    }
+
+    function handleAnswerChange(index) {
+      updateConditionalVisibility();
+    }
+
+    function updateConditionalVisibility() {
+      document.querySelectorAll("[data-show-if-no]").forEach(box => {
+        const parentNo = box.dataset.showIfNo;
+        const wantValue = box.dataset.showIfEquals;
+        const ownAspect = rawQuestions[box.dataset.qIndex].aspect;
+        const parentQIndex = rawQuestions.findIndex((q) => q.no === parentNo && q.aspect === ownAspect);
+        let matched = false;
+        if (parentQIndex !== -1) {
+          const checked = document.querySelector(`input[name="score_${parentQIndex}"]:checked`);
+          matched = checked && checked.value === wantValue;
+        }
+        if (matched) box.classList.remove("step-hide");
+        else box.classList.add("step-hide");
+      });
+    }
 
     function switchStep(stepIndex) {
       currentStep = stepIndex;
@@ -651,17 +1193,17 @@
           tabBtn.className = "w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all ";
           
           if (idx === stepIndex) {
-            if (idx === 4) {
+            if (idx === 5) {
               tabBtn.className += "bg-purple-600 text-white font-bold shadow-md";
-            } else if (idx === 5) {
+            } else if (idx === 6) {
               tabBtn.className += "bg-green-600 text-white font-bold shadow-md";
             } else {
               tabBtn.className += "bg-blue-600 text-white font-bold shadow-md";
             }
           } else {
-            if (idx === 4) {
+            if (idx === 5) {
               tabBtn.className += "text-purple-300 hover:bg-slate-800 hover:text-purple-100";
-            } else if (idx === 5) {
+            } else if (idx === 6) {
               tabBtn.className += "text-green-300 hover:bg-slate-800 hover:text-green-100";
             } else {
               tabBtn.className += "text-slate-300 hover:bg-slate-800 hover:text-white";
@@ -671,12 +1213,12 @@
       });
 
       const navButtons = document.getElementById("kuesionerNavButtons");
-      if (stepIndex === 4 || stepIndex === 5) {
+      if (stepIndex === 5 || stepIndex === 6) {
         navButtons.classList.add("step-hide");
       } else {
         navButtons.classList.remove("step-hide");
         document.getElementById("btnPrev").disabled = (stepIndex === 0);
-        if (stepIndex === 3) {
+        if (stepIndex === 4) {
           document.getElementById("btnNext").classList.add("step-hide");
           document.getElementById("btnFinalSubmit").classList.remove("step-hide");
         } else {
@@ -688,7 +1230,7 @@
 
     function moveStep(direction) {
       let next = currentStep + direction;
-      if (next >= 0 && next <= 3) switchStep(next);
+      if (next >= 0 && next <= 4) switchStep(next);
     }
 
     // TARIK SUMMARY REAL-TIME
@@ -740,6 +1282,7 @@
         document.getElementById("score_arp").innerText = getAspectScoreString(res.aspects["AR & AP Management Aspect"]);
         document.getElementById("score_fop").innerText = getAspectScoreString(res.aspects["Finance Operation Aspect"]);
         document.getElementById("score_fba").innerText = getAspectScoreString(res.aspects["Financial Business & Analyst"]);
+        document.getElementById("score_acc").innerText = getAspectScoreString(res.aspects["Accounting Aspect"]);
 
         // Render tabel skor per responden, yang terendah (weakest link) di baris paling atas & disorot
         const perRespBody = document.getElementById("perRespondenTableBody");
@@ -767,18 +1310,23 @@
         tbody.innerHTML = "";
 
         if (res.findings.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" class="text-center p-4 text-green-600 font-bold bg-green-50">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center p-4 text-green-600 font-bold bg-green-50">Tidak ada temuan ("NO"). Semua aspek patuh sempurna!</td></tr>`;
         } else {
           res.findings.forEach((find, i) => {
             const tr = document.createElement("tr");
             const culpritList = find.culprits.map(c => `${c.respondenId}${c.keteranganPosisi ? " (" + c.keteranganPosisi + ")" : ""}`).join(", ");
             const commentList = find.culprits.map(c => c.comment).filter(c => c && c !== "No remarks").join(" | ") || "No remarks";
+            const fileLinks = find.culprits
+              .filter(c => c.fileUrl && c.fileUrl.startsWith("http"))
+              .map((c, fi) => `<a href="${c.fileUrl}" target="_blank" class="text-blue-600 underline">Foto${find.culprits.length > 1 ? " " + (fi + 1) : ""}</a>`)
+              .join(", ") || "-";
             tr.innerHTML = `
               <td class="border border-gray-200 p-2 text-center font-semibold">${i + 1}</td>
               <td class="border border-gray-200 p-2 font-bold text-gray-500">${find.aspect}</td>
               <td class="border border-gray-200 p-2 text-red-600 font-semibold">${find.no}. ${find.question}</td>
               <td class="border border-gray-200 p-2 text-orange-700 font-semibold">${culpritList}</td>
               <td class="border border-gray-200 p-2 bg-yellow-50 text-yellow-900">${commentList}</td>
+              <td class="border border-gray-200 p-2 text-center no-print">${fileLinks}</td>
             `;
             tbody.appendChild(tr);
           });
@@ -822,32 +1370,56 @@
         answers: []
       };
 
-      let filesToRead = [];
+      let filesToRead = [];       // single-file questions
+      let multiFilesToRead = [];  // vouching10 (multi-file) questions
 
       rawQuestions.forEach((q, index) => {
-        const scoreInput = document.querySelector(`input[name="score_${index}"]:checked`);
-        const score = scoreInput ? scoreInput.value : "N/A"; // belum dijawab = dianggap N/A (blank), di-exclude dari total skor
-        const comment = document.getElementById(`comment_${index}`).value || "No remarks";
-        const fileElement = document.getElementById(`file_${index}`).files[0];
+        // Pertanyaan bersyarat yang lagi disembunyikan (showIf tidak terpenuhi) tidak dikirim
+        if (q.showIf) {
+          const box = document.querySelector(`[data-q-index="${index}"]`);
+          if (box && box.classList.contains("step-hide")) return;
+        }
+
+        let score = "";
+        if (q.type === "yesno" || !q.type) {
+          const scoreInput = document.querySelector(`input[name="score_${index}"]:checked`);
+          score = scoreInput ? scoreInput.value : ""; // belum dijawab = blank, di-exclude dari total skor
+        }
+        const commentEl = document.getElementById(`comment_${index}`);
+        const comment = commentEl ? (commentEl.value || "No remarks") : "No remarks";
+        const fileInputEl = document.getElementById(`file_${index}`);
 
         let ansObj = {
           qId: q.aspect.split(" ")[0] + "_" + q.no,
           aspect: q.aspect,
           no: q.no,
           text: q.text,
+          role: q.role,
+          type: q.type,
           score: score,
           comment: comment,
           fileData: null
         };
         payload.answers.push(ansObj);
 
-        if (fileElement) {
-          filesToRead.push({ idx: index, file: fileElement });
+        if (fileInputEl && fileInputEl.files.length > 0) {
+          if (q.type === "vouching10") {
+            multiFilesToRead.push({ idx: index, files: Array.from(fileInputEl.files).slice(0, 10) });
+          } else {
+            filesToRead.push({ idx: index, file: fileInputEl.files[0] });
+          }
         }
       });
 
-      if (filesToRead.length > 0) {
+      const totalFileTasks = filesToRead.length + multiFilesToRead.reduce((sum, m) => sum + m.files.length, 0);
+
+      if (totalFileTasks > 0) {
         let readCount = 0;
+        const checkDone = () => {
+          readCount++;
+          if (readCount === totalFileTasks) sendPayloadToAppsScript(payload, btn);
+        };
+
         filesToRead.forEach(function(item) {
           const reader = new FileReader();
           reader.onload = function(e) {
@@ -856,12 +1428,25 @@
               name: item.file.name,
               type: item.file.type
             };
-            readCount++;
-            if (readCount === filesToRead.length) {
-              sendPayloadToAppsScript(payload, btn);
-            }
+            checkDone();
           };
           reader.readAsDataURL(item.file);
+        });
+
+        multiFilesToRead.forEach(function(item) {
+          payload.answers[item.idx].filesData = [];
+          item.files.forEach(function(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              payload.answers[item.idx].filesData.push({
+                base64: e.target.result,
+                name: file.name,
+                type: file.type
+              });
+              checkDone();
+            };
+            reader.readAsDataURL(file);
+          });
         });
       } else {
         sendPayloadToAppsScript(payload, btn);
